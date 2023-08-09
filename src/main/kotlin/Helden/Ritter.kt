@@ -5,7 +5,7 @@ import geringerSchaden
 import mittlererSchaden
 import kritischerSchaden
 
-class Ritter (name : String, hpHero :Int = 1800) : Hero(name,hpHero){
+class Ritter (name : String, hpHero :Int = 50) : Hero(name,hpHero){
 
     fun schlagen (Gegner:Gegner){
         var kleinerSchaden = geringerSchaden()

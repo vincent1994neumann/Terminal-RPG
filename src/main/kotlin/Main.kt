@@ -13,24 +13,25 @@ fun main() {
     var bogenSchütze = Bogenschütze("-Robin Hood-")
     var magier = Magier("-Houdini-")
     var heldenListe : MutableList<Hero> = mutableListOf(ritter,bogenSchütze,magier)
+
     // Gegner
     var dunklerRitter = DunklerRitter("-Peter-")
     var troll = Troll("-Gromnak-", heldenListe)
 
-    fun hpÜberischt (){
-        print("HP- Ritter: ${ritter.hpHero}; ")
-        print("HP- Bogenschütze: ${bogenSchütze.hpHero}; ")
-        print("HP- Magier: ${magier.hpHero}")
+    fun hpÜberischt (heldenListe: MutableList<Hero>){
+        for (hero in heldenListe)
+            print("${hero.name} - HP: ${hero.hpHero} ; ")
+        println()
         println()
     }
 
 
 
-    hpÜberischt()
-    dunklerRitter.attackDunklerRitter(ritter)
-    hpÜberischt()
-    troll.attackTroll(ritter, heldenListe)
-    hpÜberischt()
+    hpÜberischt(heldenListe)
+    troll.attackTroll(heldenListe)
+    hpÜberischt(heldenListe)
+
+
 
     //Alle Attacken der gegner implementieren und random ausgeben lassen
 
