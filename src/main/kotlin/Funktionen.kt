@@ -1,3 +1,8 @@
+import Helden.Hero
+
+
+
+
 fun geringerSchaden(): Int {
     return (50..150).random()
 }
