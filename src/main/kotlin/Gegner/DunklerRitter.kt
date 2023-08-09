@@ -1,32 +1,32 @@
 package Gegner
 
 import Helden.Hero
-import Helden.Ritter
 import geringerSchaden
 import mittlererSchaden
-import kotlin.random.Random
 
 class DunklerRitter (name: String, hpGegner: Int = 1500) : Gegner(name,hpGegner){
 
       fun schlagen (Hero: Hero){
         var kleinerSchaden = geringerSchaden()
-        println("Der dunkle Ritter trifft -${Hero.name}- und verursacht $kleinerSchaden Schaden.")
+        println("Der dunkle Ritter setzte die Attacke -Schlagen- ein und verursacht $kleinerSchaden Schaden bei ${Hero.name}.")
         Hero.hpHero-=kleinerSchaden
     }
 
     fun stechen (Hero: Hero) {
         var mittlererSchaden = mittlererSchaden()
-        println("Der dunkle Ritter trifft -${Hero.name}- und verursacht $mittlererSchaden Schaden.")
+        println("Der dunkle Ritter setzte die Attacke -Stechen- ein und verursacht $mittlererSchaden Schaden bei ${Hero.name}.")
         Hero.hpHero-=mittlererSchaden
     }
 
-    fun attackDunklerRitter (Hero: Hero) {
-        var randomNumber = (1..2).random()
+    fun auswahlAttackeDunklerRitter (Hero: Hero) {
+        var randomNumber = (1..100).random()
         when (randomNumber) {
-            1 -> schlagen(Hero)
-            2-> stechen(Hero)
+            in 1..65 -> schlagen(Hero)
+            in 66..100 -> stechen(Hero)
         }
     }
+
+
 
 
 }
