@@ -72,9 +72,28 @@ fun main() {
         goblin.auswahlAttackeGoblin(heldenListe.random())
     }
 
-    //-------------------------------------------------------------------------
 
-    ritter.angreiferWählen
+
+    fun angreiferWählen (heldenList: MutableList<Hero>):Hero{
+        println(heldenList)
+        println("Mit welchem Helden wollen Sie angreifen?")
+        var choice = readln().toInt()
+
+        when (choice){
+            1 -> return heldenList[0]
+            2 -> return heldenList[1]
+            3 -> return heldenList[2]
+            else -> {
+                println("Deine Eingabe war falsch, bitte wähle erneut.")
+                angreiferWählen(heldenList)
+
+            }
+        }
+    return Hero("",2)
+    }
+    //-------------------------------------------------------------------------
+    println(angreiferWählen(heldenListe))
+
 
     //Alle Attacken der gegner implementieren und random ausgeben lassen
 

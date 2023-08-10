@@ -7,7 +7,9 @@ import mittlererSchaden
 
 open class Hero (var name : String, var hpHero:Int){
 open var isProtected : Boolean = false
-
+    override fun toString(): String {
+        return name
+    }
 
 
     open fun kleineAttacke (Gegner: Gegner){
@@ -66,11 +68,7 @@ open var isProtected : Boolean = false
     }
 
 
-    fun angreiferWählen (heldenList: MutableList<Hero>){
-        println("Mit welchem Helden wollen Sie angreifen?")
-        println(heldenList)
 
-    }
 
     //Wel
 
