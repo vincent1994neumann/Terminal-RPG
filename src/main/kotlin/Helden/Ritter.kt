@@ -1,28 +1,30 @@
 package Helden
 
 import Gegner.Gegner
-import geringerSchaden
-import mittlererSchaden
 import kritischerSchaden
 
-class Ritter (name : String, hpHero :Int = 1500) : Hero(name,hpHero){
+class Ritter (name : String, hpHero :Int = 50) : Hero(name,hpHero){
 
-    fun schlagen (Gegner:Gegner){
-        var kleinerSchaden = geringerSchaden()
-        println("Der Ritter trifft den Gegner und verursacht $kleinerSchaden Schaden.")
-        Gegner.hpGegner-=kleinerSchaden
+    override fun kleineAttacke(Gegner: Gegner) {
+        super.kleineAttacke(Gegner)
     }
 
-    fun stechen (Gegner: Gegner) {
-        var mittlererSchaden = mittlererSchaden()
-        println("Der Ritter trifft den Gegner und verursacht $mittlererSchaden Schaden.")
-        Gegner.hpGegner-=mittlererSchaden
+    override fun mittlereAttacke(Gegner: Gegner) {
+        super.mittlereAttacke(Gegner)
     }
 
-    fun spezialAttackeRitter (Gegner: Gegner){
-        var kritischerSchaden = kritischerSchaden()
-        println("Der Ritter trifft den Gegner und verursacht $kritischerSchaden Schaden.")
-        Gegner.hpGegner-=kritischerSchaden
+    override fun spezialAttacke(Gegner: Gegner) {
+        super.spezialAttacke(Gegner)
     }
+
+    fun waehleGegner(gegnerListe : MutableList<Gegner>){
+        println("Bitte wähle den Gegner aus den du angreifen möchtest.")
+
+    }
+    fun userAttackenAuswahlRitter (){
+
+    }
+
+
 
 }

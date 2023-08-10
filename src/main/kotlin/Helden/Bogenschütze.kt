@@ -7,23 +7,43 @@ import kritischerSchaden
 class Bogenschütze (name : String, hpHero: Int = 300) : Hero(name,hpHero){
 
     //Attacken des Bogenschützen
-
-    fun einzelSchussPfeil (Gegner: Gegner){
+    //Pfeilangriff
+    override fun kleineAttacke(Gegner: Gegner) {
         var kleinerSchaden = geringerSchaden()
-        println("Der Bogenschütze trifft den Gegner und verursacht $kleinerSchaden Schaden.")
-        Gegner.hpGegner-=kleinerSchaden
+        println("Der $name schießt einen Pfeil auf $Gegner.")
+        Thread.sleep(500)
+        if (Gegner.trollProtection) {
+            println("Der Troll absorbiert deinen Angriff mit Magie.")
+        }else {
+            println("$name trifft $Gegner und verursacht $kleinerSchaden Schaden.")
+            Gegner.hpGegner -= kleinerSchaden
+        }
     }
 
-    fun brennenderPfeil (Gegner: Gegner){
+    // Brennenderpfeil
+    override fun mittlereAttacke(Gegner: Gegner) {
         var mittlererSchaden = mittlererSchaden()
-        println("Der Bogenschütze trifft den Gegner mit einen brennenden Pfeil und verursacht $mittlererSchaden Schaden.")
-        Gegner.hpGegner-=mittlererSchaden
+        println("Der $name schießt einen brennenden Pfeil auf $Gegner.")
+        Thread.sleep(500)
+        if (Gegner.trollProtection) {
+            println("Der Troll absorbiert deinen Angriff mit Magie.")
+        }else {
+            println("$name trifft $Gegner und verursacht $mittlererSchaden Schaden.")
+            Gegner.hpGegner-=mittlererSchaden
+        }
     }
 
-    fun spezialAttackeBogen (Gegner: Gegner){
+    override fun spezialAttacke(Gegner: Gegner) {
         var kritischerSchaden = kritischerSchaden()
-        println("Der Bogenschütze trifft den Gegner mit einen Snipershot und verursacht $kritischerSchaden Schaden.")
-        Gegner.hpGegner-=kritischerSchaden
+        println("Der $name schießt einen Präzisonspfeil auf $Gegner.")
+        Thread.sleep(500)
+        if (Gegner.trollProtection) {
+            println("Der Troll absorbiert deinen Angriff mit Magie.")
+        } else {
+            println("Der $name trifft den $Gegner und verursacht $kritischerSchaden Schaden.")
+            Gegner.hpGegner -= kritischerSchaden
+        }
     }
+
 
 }
