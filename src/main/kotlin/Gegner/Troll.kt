@@ -8,14 +8,13 @@ import geringerFlächenSchaden
 import kritischerSchaden
 import mittlererSchaden
 
-class Troll (name: String, hpGegner: Int = 2000) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Int = 5000) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     fun keulenSchwung(heldenListe: MutableList<Hero>){
         var keulenSchadenGegner = geringerFlächenSchaden()
-        println("Der Troll greift an mit der Attacke: Keulen Schwung")
         Thread.sleep(500)
-        println("Der Troll ${this.name} setzt die Attacke -Keulen Schwung- ein und trifft alle Helden mit ${geringerFlächenSchaden()} Schaden.")
+        println("${this.name} setzt die Attacke -Keulen Schwung- ein und trifft alle Helden mit ${geringerFlächenSchaden()} Schaden.")
             for (hero in heldenListe){
                 if (hero.isProtected){
                     println("Die Attacke ist bei ${hero.name} Wirkungslos, da der Schutzzauber vom Magier wirkt.")
@@ -50,17 +49,15 @@ for (hero in HeroMutableList){
         var mittlererSchaden = mittlererSchaden()
         var auswahlHit = (0..<heldenListe.size).random()
         var eliminierteHelden : MutableList<Hero> = mutableListOf()
-        println("Der Troll greift an - Attacke -Schlagen-")
-        Thread.sleep(500)
         if (heldenListe[auswahlHit].isProtected){
-            println("Der Held -${heldenListe[auswahlHit].name}- wird durch einen Zauber geschützt und kann nicht angegriffen werden.")
+            println("${heldenListe[auswahlHit].name} wird durch einen Zauber geschützt und kann nicht angegriffen werden.")
             println("Der Angriff schlug fehl.")
             println()
         }else {
             println("Der Troll setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
             heldenListe[auswahlHit].hpHero-=mittlererSchaden
                 if(heldenListe[auswahlHit].hpHero<=0){
-                    println("Der Held ${heldenListe[auswahlHit].name} wurde eliminiert")
+                    println("${heldenListe[auswahlHit].name} wurde eliminiert")
                     eliminierteHelden.add(heldenListe[auswahlHit])
                 }
         }
@@ -72,16 +69,15 @@ for (hero in HeroMutableList){
         var kritischerSchaden = kritischerSchaden()
         var auswahlHit = (0..<heldenListe.size).random()
         var eliminierteHelden: MutableList<Hero> = mutableListOf()
-        println("Der Troll greift an - Attacke -Umrennen-")
-        Thread.sleep(500)
+
         if (heldenListe[auswahlHit].isProtected) {
-            println("Der Held -${heldenListe[auswahlHit].name}- ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
+            println("${heldenListe[auswahlHit].name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
             println("Der Angriff schlug fehl.")
         } else {
             println("Der Troll setzt die Attacke -Umrennen- ein und verursacht $kritischerSchaden Schaden beim Helden ${heldenListe[auswahlHit].name}.")
             heldenListe[auswahlHit].hpHero -= kritischerSchaden
             if (heldenListe[auswahlHit].hpHero <= 0) {
-                println("Der Held ${heldenListe[auswahlHit].name} wurde eliminiert")
+                println("${heldenListe[auswahlHit].name} wurde eliminiert")
                 eliminierteHelden.add(heldenListe[auswahlHit])
             }
         }

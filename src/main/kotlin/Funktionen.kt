@@ -26,10 +26,10 @@ fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
     for (gegner in gegnerListe) {
         if (gegner.hpGegner <= 0) {
             eliminierteGegner.add(gegner)
-            println()
+
             println("Der Gegner ${gegner.name} wurde von Dir erfolgreich besiegt!")
         } else {
-            print("${gegner.name} HP: ${gegner.hpGegner}; ")
+            println("${gegner.name} HP: ${gegner.hpGegner} ")
         }
     }
     println()
@@ -44,7 +44,7 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
             eliminierteHelden.add(hero)
             println("Ihr Held ${hero.name} wurde eliminiert!")
         } else {
-            print("${hero.name} HP: ${hero.hpHero} ")
+            println("${hero.name} HP: ${hero.hpHero} ")
 
         }
     }
@@ -52,4 +52,6 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
     heldenListe.removeAll(eliminierteHelden)
 }
 
+fun beutel (heldenListe: MutableList<Hero>){
 
+}

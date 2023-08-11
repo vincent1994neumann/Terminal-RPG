@@ -3,9 +3,10 @@ package Helden
 import Gegner.Gegner
 import geringerFlächenSchaden
 import mittlererFlächenSchaden
+import org.w3c.dom.css.Counter
 
 class Magier (name : String, hpHero: Int = 50) : Hero(name,hpHero) {
-var abklingZeit = 2
+
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
@@ -15,10 +16,10 @@ var abklingZeit = 2
             if (gegner.trollProtection) {
                 println("Der Troll absorbiert deinen Angriff mit Magie.")
             } else {
-                println("$name trifft $gegner und verursacht $geringerFlächenSchaden Schaden.")
+                println("$name trifft $gegner und fügt $geringerFlächenSchaden Schaden zu.")
                 gegner.hpGegner -= geringerFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("Der ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
         }
@@ -35,21 +36,17 @@ var abklingZeit = 2
                 println("$name trifft $gegner und verursacht $mittlererFlächenSchaden Schaden.")
                 gegner.hpGegner -= mittlererFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("Der ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
         }
         println()
     }
-        fun schutzZauberHero(rundeAnzahl:Int) {
-            if (0 >= 4 && !isProtected && rundeAnzahl % 4 == 0) {
-                isProtected = true
-                println("Der Schutzzauber vom Magier wirkt für die nächste Spielrunde.")
-            }else {
-                println("Der Schutzzauber kann aktuell noch nicht angewendet werden, erst in XXX Runden")
-            }
-
-            }
+        fun schutzZauberHero() {
+            isProtected = true
+            protectionCountdown = 4
+            println("Der Schutzzauber wurde aktiviert. Die Helden sind für die nächsten zwei Runden geschützt.")
+        }
 
 
             //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
@@ -58,8 +55,8 @@ var abklingZeit = 2
         println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
         println("1. Hagelschaden (Flächenschaden)")
         println("2. Feuerball (Flächenschaden)")
-        if (1==1){
-            println("3. Schutzzauber (Schütz alle Helden für die nächste Runde)")
+        if (protectionCountdown == 0){
+            println("3. Schutzzauber (Schütz alle Helden für die nächsten 2.Runden)")
         }
         println()
 
@@ -69,8 +66,7 @@ var abklingZeit = 2
             when (choice){
                 1 -> hagelSchadenHero(gegnerListe)
                 2 -> feuerBallHero(gegnerListe)
-                3 -> {
-
+                3 -> {schutzZauberHero()
                 }
             }
         }catch (e : Exception){

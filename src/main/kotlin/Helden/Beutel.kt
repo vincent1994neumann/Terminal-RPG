@@ -1,6 +1,7 @@
 package Helden
 
-class Beutel {
+class Beutel (){
+
 }
 
 //Klasse oder eher als Funktion????

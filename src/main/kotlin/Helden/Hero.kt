@@ -7,7 +7,8 @@ import kritischerSchaden
 import mittlererSchaden
 
 open class Hero (var name : String, var hpHero:Int){
-open var isProtected : Boolean = false
+    open var isProtected : Boolean = false
+    open var protectionCountdown = 0
     override fun toString(): String {
         return name
     }
@@ -21,8 +22,11 @@ open var isProtected : Boolean = false
         if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $ziel und verursacht $kleinerSchaden Schaden.")
+            println("$name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
             ziel.hpGegner -= kleinerSchaden
+        }
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
         println()
     }
@@ -38,6 +42,9 @@ open var isProtected : Boolean = false
             println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
             ziel.hpGegner-=mittlererSchaden
         }
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+        }
         println()
     }
 
@@ -52,17 +59,10 @@ open var isProtected : Boolean = false
             println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
             ziel.hpGegner -= kritischerSchaden
         }
-        println()
-    }
-
-    fun stillAliveHero(hero: Hero):Boolean{
-        if (hero.hpHero <= 0){
-            println("$name der Gegner ist eliminiert worden!")
-            return false
-        }else  {
-            println("$name hat noch $hpHero Lebenspunkte.")
-            return true
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
+        println()
     }
 
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {

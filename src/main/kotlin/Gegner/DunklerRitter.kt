@@ -2,7 +2,7 @@ package Gegner
 
 import Helden.Hero
 
-class DunklerRitter (name: String, hpGegner: Int = 1500) : Gegner(name,hpGegner){
+class DunklerRitter (name: String, hpGegner: Int = 5000) : Gegner(name,hpGegner){
     override fun kleineAttackeGegner(Hero: Hero) {
         super.kleineAttackeGegner(Hero)
     }

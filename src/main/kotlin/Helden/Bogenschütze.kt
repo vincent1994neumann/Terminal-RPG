@@ -19,6 +19,9 @@ class Bogenschütze (name : String, hpHero: Int = 300) : Hero(name,hpHero){
             println("$name trifft $ziel und verursacht $kleinerSchaden Schaden.")
             ziel.hpGegner -= kleinerSchaden
         }
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+        }
     }
 
     // Brennenderpfeil
@@ -33,6 +36,9 @@ class Bogenschütze (name : String, hpHero: Int = 300) : Hero(name,hpHero){
             println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
             ziel.hpGegner-=mittlererSchaden
         }
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+        }
     }
 
     override fun spezialAttacke(gegner: List<Gegner>) {
@@ -45,6 +51,9 @@ class Bogenschütze (name : String, hpHero: Int = 300) : Hero(name,hpHero){
         } else {
             println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
             ziel.hpGegner -= kritischerSchaden
+        }
+        if (ziel.hpGegner <= 0) {
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
     }
 
