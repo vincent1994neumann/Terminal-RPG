@@ -8,40 +8,43 @@ class Bogenschütze (name : String, hpHero: Int = 300) : Hero(name,hpHero){
 
     //Attacken des Bogenschützen
     //Pfeilangriff
-    override fun kleineAttacke(Gegner: Gegner) {
+    override fun kleineAttacke(gegner: List<Gegner>) {
         var kleinerSchaden = geringerSchaden()
-        println("Der $name schießt einen Pfeil auf $Gegner.")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name schießt einen Pfeil auf $ziel.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $Gegner und verursacht $kleinerSchaden Schaden.")
-            Gegner.hpGegner -= kleinerSchaden
+            println("$name trifft $ziel und verursacht $kleinerSchaden Schaden.")
+            ziel.hpGegner -= kleinerSchaden
         }
     }
 
     // Brennenderpfeil
-    override fun mittlereAttacke(Gegner: Gegner) {
+    override fun mittlereAttacke(gegner: List<Gegner>) {
         var mittlererSchaden = mittlererSchaden()
-        println("Der $name schießt einen brennenden Pfeil auf $Gegner.")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name schießt einen brennenden Pfeil auf $ziel.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $Gegner und verursacht $mittlererSchaden Schaden.")
-            Gegner.hpGegner-=mittlererSchaden
+            println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
+            ziel.hpGegner-=mittlererSchaden
         }
     }
 
-    override fun spezialAttacke(Gegner: Gegner) {
+    override fun spezialAttacke(gegner: List<Gegner>) {
         var kritischerSchaden = kritischerSchaden()
-        println("Der $name schießt einen Präzisonspfeil auf $Gegner.")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name schießt einen Präzisonspfeil auf $ziel.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         } else {
-            println("Der $name trifft den $Gegner und verursacht $kritischerSchaden Schaden.")
-            Gegner.hpGegner -= kritischerSchaden
+            println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
+            ziel.hpGegner -= kritischerSchaden
         }
     }
 

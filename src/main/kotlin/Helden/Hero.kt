@@ -2,6 +2,7 @@ package Helden
 
 import Gegner.Gegner
 import geringerSchaden
+import hpÜbersichtGegner
 import kritischerSchaden
 import mittlererSchaden
 
@@ -12,40 +13,46 @@ open var isProtected : Boolean = false
     }
 
 
-    open fun kleineAttacke (Gegner: Gegner){
+    open fun kleineAttacke (gegner: List<Gegner>){
         var kleinerSchaden = geringerSchaden()
-        println("Der $name greift an - Attacke -Schlagen- ")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name greift mit Attacke -Schlagen- an.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $Gegner und verursacht $kleinerSchaden Schaden.")
-            Gegner.hpGegner -= kleinerSchaden
+            println("$name trifft $ziel und verursacht $kleinerSchaden Schaden.")
+            ziel.hpGegner -= kleinerSchaden
         }
+        println()
     }
 
-    open fun mittlereAttacke (Gegner: Gegner) {
+    open fun mittlereAttacke (gegner: List<Gegner>) {
         var mittlererSchaden = mittlererSchaden()
-        println("Der $name greift an - Attacke -Stechen- ")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name greift mit Attacke -Stechen- an.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $Gegner und verursacht $mittlererSchaden Schaden.")
-            Gegner.hpGegner-=mittlererSchaden
+            println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
+            ziel.hpGegner-=mittlererSchaden
         }
+        println()
     }
 
-    open fun spezialAttacke (Gegner: Gegner){
+    open fun spezialAttacke (gegner: List<Gegner>){
         var kritischerSchaden = kritischerSchaden()
-        println("Der $name greift mit seiner Spezialattacke an.")
+        var ziel = gegnerWählen(gegner)
+        println("Der $name greift mit seiner -Spezialattacke- an.")
         Thread.sleep(500)
-        if (Gegner.trollProtection) {
+        if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         } else {
-            println("Der $name trifft den $Gegner und verursacht $kritischerSchaden Schaden.")
-            Gegner.hpGegner -= kritischerSchaden
+            println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
+            ziel.hpGegner -= kritischerSchaden
         }
+        println()
     }
 
     fun stillAliveHero(hero: Hero):Boolean{
@@ -58,21 +65,43 @@ open var isProtected : Boolean = false
         }
     }
 
-    fun printAttack(gegner: Gegner){
-        println("Welche Attacke möchtest du auswählen")
-        var choice = readln().toInt()
-        when (choice){
-            1 -> kleineAttacke(gegner)
-            2 -> mittlereAttacke(gegner)
+    fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
+        println(gegnerListe)
+        hpÜbersichtGegner(gegnerListe.toMutableList())
+        println("Welchen Gegner möchtest du angreifen?")
+        println("Wählen Sie die entsprechende Nummer:")
+        var choice = readln().toIntOrNull()
+        if (choice != null && choice in 1..gegnerListe.size) {
+            return gegnerListe[choice - 1]
+            println(gegnerListe[choice])
+        } else {
+            println("Deine Eingabe war falsch, bitte wähle erneut.")
+            return gegnerWählen(gegnerListe)
         }
     }
 
 
-
-
-    //Wel
-
-
+    open fun attackeWählen(gegnerList : List<Gegner>){
+        println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
+        println("1. Schlagen")
+        println("2. Stechen")
+        println("3. Spezialattacke")
+        println("4. Tasche öffnen")
+        println()
+        println("Welche Attacke möchtest du auswählen:")
+    try {
+        var choice = readln().toInt()
+        when (choice){
+            1 -> kleineAttacke(gegnerList)
+            2 -> mittlereAttacke(gegnerList)
+            3 -> spezialAttacke(gegnerList)
+        }
+    }catch (e : Exception){
+            println("Ups, $e ")
+            println("Bitte prüfe deine Eingabe.")
+            attackeWählen(gegnerList)
+        }
+    }
 }
 
 

@@ -1,30 +1,19 @@
 package Helden
 
 import Gegner.Gegner
-import kritischerSchaden
 
 class Ritter (name : String, hpHero :Int = 50) : Hero(name,hpHero){
 
-    override fun kleineAttacke(Gegner: Gegner) {
-        super.kleineAttacke(Gegner)
+    override fun kleineAttacke(gegner: List<Gegner>) {
+        super.kleineAttacke(gegner)
     }
 
-    override fun mittlereAttacke(Gegner: Gegner) {
-        super.mittlereAttacke(Gegner)
+    override fun mittlereAttacke(gegner: List<Gegner>) {
+        super.mittlereAttacke(gegner)
     }
 
-    override fun spezialAttacke(Gegner: Gegner) {
-        super.spezialAttacke(Gegner)
+    override fun spezialAttacke(gegner: List<Gegner>) {
+        super.spezialAttacke(gegner)
     }
-
-    fun waehleGegner(gegnerListe : MutableList<Gegner>){
-        println("Bitte wähle den Gegner aus den du angreifen möchtest.")
-
-    }
-    fun userAttackenAuswahlRitter (){
-
-    }
-
-
 
 }

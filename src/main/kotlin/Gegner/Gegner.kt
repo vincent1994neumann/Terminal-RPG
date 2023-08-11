@@ -12,7 +12,7 @@ open class Gegner (var name : String,var hpGegner: Int){
 
     open fun kleineAttackeGegner (Hero: Hero){
         var kleinerSchaden = geringerSchaden()
-        println("Der $name greift an - Attacke -Schlagen-")
+        println("Der $name greift mit Attacke -Schlagen- an.")
         Thread.sleep(500)
         if (Hero.isProtected) {
             println("Der Held ${Hero.name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
@@ -24,7 +24,7 @@ open class Gegner (var name : String,var hpGegner: Int){
 
     open fun mittlereAttackeGegner (Hero: Hero) {
         var mittlererSchaden = mittlererSchaden()
-        println("Der $name greift an - Attacke -Stechen-")
+        println("Der $name greift mit Attacke -Stechen- an.")
         Thread.sleep(500)
         if (Hero.isProtected) {
             println("Der Held ${Hero.name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
@@ -35,13 +35,6 @@ open class Gegner (var name : String,var hpGegner: Int){
     }
 
 
-    fun stillAliveGegner():Boolean{
-        if (hpGegner <= 0){
-            println("$name der Gegner ist eliminiert worden!")
-            return false
-        }else  {
-            println("$name hat noch $hpGegner Lebenspunkte.")
-            return true
-        }
-    }
+
+
 }
