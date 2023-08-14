@@ -2,12 +2,13 @@ import Gegner.DunklerRitter
 import Gegner.Gegner
 import Gegner.Goblin
 import Gegner.Troll
-import Helden.Bogenschütze
-import Helden.Hero
-import Helden.Magier
-import Helden.Ritter
+import Helden.*
 
 fun main() {
+
+
+    // Gemeinsamer Beutel - globale Instanz, sodass ein BEutel für alle Helden gilt
+    var beutel = Beutel(2, 1)
     // Helden
     var held1 = Ritter("Ritter")
     var held2 = Bogenschütze("Bogenschütze")
@@ -27,7 +28,7 @@ fun main() {
             println("Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
             println("Runden-Countdown Schutzzauber: ${hero.protectionCountdown} ")
         } else {
-                println("Der Gegner holt zur Attacke aus!")
+            println("Der Gegner holt zur Attacke aus!")
             Thread.sleep(500)
             var angreifenderGegner = gegnerListe.random()
             when (angreifenderGegner) {
@@ -35,7 +36,7 @@ fun main() {
                 gegner2 -> gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
                 gegner3 -> gegner3.auswahlAttackeGoblin(heldenListe.random())
 
-        }
+            }
             println()
             Thread.sleep(1500)
         }
@@ -56,18 +57,39 @@ fun main() {
         }
     }
 
-    fun heroAngreifLogik(){
+
+
+    fun heroAngreifLogik() {
         println("Übersicht Lebenspunkte Gegner:")
         hpÜbersichtGegner(gegnerListe)
         println("Übersicht Lebenspunkte Helden:")
         hpÜberischtHero(heldenListe)
         println()
-        var ausgewählterHeld = heroWählen(heldenListe)
-        println(ausgewählterHeld)
-        ausgewählterHeld.attackeWählen(gegnerListe,heldenListe)
-        println()
-        hpÜbersichtGegner(gegnerListe)
-    }
+        println("Möchten Sie den Beutel öffnen oder kämpfen?")
+        println("1. Beutel öffnen")
+        println("2. Kämpfen")
+        //GGF noch mal abfangen prüfen
+        when (readln().toIntOrNull()) {
+            1 -> {
+                println("Beutelinhalt:")
+                println("1. Heiltrank: ${beutel.heiltränke}")
+                println("2. Angriffstrank: ${beutel.angriffstrank}")
+            }
+                2 -> {
+                    println("Übersicht Lebenspunkte Gegner:")
+                    hpÜbersichtGegner(gegnerListe)
+                    println("Übersicht Lebenspunkte Helden:")
+                    hpÜberischtHero(heldenListe)
+                    println()
+                    var ausgewählterHeld = heroWählen(heldenListe)
+                    println(ausgewählterHeld)
+                    ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
+                    println()
+
+                }
+            }
+        }
+
 
     fun spielrunden() {
         var counter = 1
@@ -130,3 +152,4 @@ spielrunden()
 
 
 }
+

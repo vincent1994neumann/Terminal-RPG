@@ -7,7 +7,7 @@ import hpÜbersichtGegner
 import kritischerSchaden
 import mittlererSchaden
 
-open class Hero (var name : String, var hpHero:Int, var isProtected : Boolean = false){
+open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean = false){
 
     open var protectionCountdown = 0
     override fun toString(): String {
@@ -81,13 +81,12 @@ open class Hero (var name : String, var hpHero:Int, var isProtected : Boolean = 
         }
     }
 
-var beutel : Beutel = Beutel(2,1)
     open fun trinkHeiltrank(heldenListe: MutableList<Hero>) {
-        if (beutel.benutzeHeiltrank()) {
+        if (0==0) {//beutel.benutzeHeiltrank()
             println("Alle Helden erhalten + 50% HP.")
             for (hero in heldenListe) {
                 hero.hpHero *= 1.5
-                beutel.heiltränke -= 1
+
             }
             hpÜberischtHero(heldenListe)
 
@@ -95,7 +94,8 @@ var beutel : Beutel = Beutel(2,1)
     }
 
     open fun trinkAngriffstrank(heldenListe: MutableList<Hero>){
-        if (beutel.benutzeAngriffstrank()){
+        if (0==0
+        ){//beutel.benutzeAngriffstrank()
             println("Alle Helden erhalten + 50% HP.")
 
             for(hero in heldenListe){
@@ -107,32 +107,26 @@ var beutel : Beutel = Beutel(2,1)
 
 
     open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
-        println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
-        println("1. Schlagen")
-        println("2. Stechen")
-        println("3. Spezialattacke")
-        println("4. Tasche öffnen")
+        println("Bitte wähle eine Aktion:")
+        println("1. Attacke:            Schlagen")
+        println("2. Attacke:            Stechen")
+        println("3. Attacke:            Spezialattacke")
         println()
-        println("Welche Attacke möchtest du auswählen:")
+        println("Welche Aktion möchtest du auswählen:")
     try {
         var choice = readln().toInt()
         when (choice){
-            1 -> kleineAttacke(gegnerList)
-            2 -> mittlereAttacke(gegnerList)
-            3 -> spezialAttacke(gegnerList)
-            4 -> {
-                println("1. Heiltrank: ${beutel.heiltränke}")
-                println("2. Angriffstrank: ${beutel.angriffstrank}")
-
-                when   (val choiceTrank = readln().toInt()){
-                    1 -> trinkHeiltrank(heldenListe)
-                    2 -> "Test Angriffstrank"
-                    else -> {
-                        println("Ungültige Auswahl")
-                        attackeWählen(gegnerList,heldenListe)
-                    }
-
-                }
+            1 -> {
+                kleineAttacke(gegnerList)
+                hpÜberischtHero(heldenListe)
+            }
+            2 -> {
+                mittlereAttacke(gegnerList)
+                hpÜberischtHero(heldenListe)
+            }
+            3 -> {
+                spezialAttacke(gegnerList)
+                hpÜberischtHero(heldenListe)
             }
             else -> {
                 println("Ungültige Auswahl!")

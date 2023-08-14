@@ -44,7 +44,7 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
             eliminierteHelden.add(hero)
             println("Ihr Held ${hero.name} wurde eliminiert!")
         } else {
-            println("${hero.name} HP: ${hero.hpHero} ")
+            println("${hero.name} HP: ${hero.hpHero.toInt()} ")
 
         }
     }
@@ -52,12 +52,14 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
     heldenListe.removeAll(eliminierteHelden)
 }
 fun isProtected (heldenListe: MutableList<Hero>){
+
     for (hero in heldenListe) {
     if (hero.isProtected) {
-        hero.protectionCountdown--}
-    if (hero.protectionCountdown == 0) {
-        hero.isProtected = false
-        println("Der Schutzzauber von ${hero.name} hat nachgelassen.")
-     }
+        hero.protectionCountdown--
     }
+        if (hero.protectionCountdown == 0) {
+        hero.isProtected = false
+    }
+    }
+
 }

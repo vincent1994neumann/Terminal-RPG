@@ -8,7 +8,7 @@ import geringerFlächenSchaden
 import kritischerSchaden
 import mittlererSchaden
 
-class Troll (name: String, hpGegner: Int = 2500) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Double = 2500.0) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     fun keulenSchwung(heldenListe: MutableList<Hero>){

@@ -4,7 +4,7 @@ import Helden.Hero
 import geringerSchaden
 import mittlererSchaden
 
-open class Gegner (var name : String,var hpGegner: Int){
+open class Gegner (var name : String,var hpGegner: Double){
     var trollProtection : Boolean = false
     override fun toString(): String {
         return name

@@ -2,10 +2,11 @@ package Helden
 
 import Gegner.Gegner
 import geringerFlächenSchaden
+import hpÜbersichtGegner
 import mittlererFlächenSchaden
 import org.w3c.dom.css.Counter
 
-class Magier (name : String, hpHero: Int = 10000) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 10000.0) : Hero(name,hpHero) {
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
@@ -54,11 +55,11 @@ class Magier (name : String, hpHero: Int = 10000) : Hero(name,hpHero) {
             //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
 
     override fun attackeWählen(gegnerListe: List<Gegner>, heldenListe: MutableList<Hero>) {
-        println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
-        println("1. Hagelschaden (Flächenschaden)")
-        println("2. Feuerball (Flächenschaden)")
+        println("Bitte wähle eine Aktion:")
+        println("1. Attacke:             Hagelschaden (Flächenschaden)")
+        println("2. Attacke:             Feuerball (Flächenschaden)")
         if (protectionCountdown == 0){
-            println("3. Schutzzauber (Schütz alle Helden für die nächsten 2.Runden)")
+            println("3. Attacke:             Schutzzauber (Schutz für 2 Runden/alle Helden)")
         }
         println()
 
@@ -66,8 +67,14 @@ class Magier (name : String, hpHero: Int = 10000) : Hero(name,hpHero) {
         try {
             var choice = readln().toInt()
             when (choice){
-                1 -> hagelSchadenHero(gegnerListe)
-                2 -> feuerBallHero(gegnerListe)
+                1 -> {
+                    hagelSchadenHero(gegnerListe)
+                    hpÜbersichtGegner(gegnerListe.toMutableList())
+                }
+                2 -> {
+                    feuerBallHero(gegnerListe)
+                    hpÜbersichtGegner(gegnerListe.toMutableList())
+                }
                 3 -> {schutzZauberHero(heldenListe)
                 }
             }
