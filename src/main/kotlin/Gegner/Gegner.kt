@@ -28,6 +28,7 @@ open class Gegner (var name : String,var hpGegner: Int){
         Thread.sleep(500)
         if (Hero.isProtected) {
             println("${Hero.name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
+
         } else {
             println("$name verursacht $mittlererSchaden Schaden bei ${Hero.name}.")
             Hero.hpHero -= mittlererSchaden

@@ -6,8 +6,8 @@ import hpÜbersichtGegner
 import kritischerSchaden
 import mittlererSchaden
 
-open class Hero (var name : String, var hpHero:Int){
-    open var isProtected : Boolean = false
+open class Hero (var name : String, var hpHero:Int, var isProtected : Boolean = false){
+
     open var protectionCountdown = 0
     override fun toString(): String {
         return name
@@ -81,7 +81,7 @@ open class Hero (var name : String, var hpHero:Int){
     }
 
 
-    open fun attackeWählen(gegnerList : List<Gegner>){
+    open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
         println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
         println("1. Schlagen")
         println("2. Stechen")
@@ -99,7 +99,7 @@ open class Hero (var name : String, var hpHero:Int){
     }catch (e : Exception){
             println("Ups, $e ")
             println("Bitte prüfe deine Eingabe.")
-            attackeWählen(gegnerList)
+            attackeWählen(gegnerList,heldenListe)
         }
     }
 }

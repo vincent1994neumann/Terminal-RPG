@@ -8,7 +8,7 @@ import geringerFlächenSchaden
 import kritischerSchaden
 import mittlererSchaden
 
-class Troll (name: String, hpGegner: Int = 5000) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Int = 2500) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     fun keulenSchwung(heldenListe: MutableList<Hero>){
@@ -49,18 +49,18 @@ for (hero in HeroMutableList){
         var mittlererSchaden = mittlererSchaden()
         var auswahlHit = (0..<heldenListe.size).random()
         var eliminierteHelden : MutableList<Hero> = mutableListOf()
-        if (heldenListe[auswahlHit].isProtected){
-            println("${heldenListe[auswahlHit].name} wird durch einen Zauber geschützt und kann nicht angegriffen werden.")
-            println("Der Angriff schlug fehl.")
-            println()
-        }else {
-            println("Der Troll setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
-            heldenListe[auswahlHit].hpHero-=mittlererSchaden
-                if(heldenListe[auswahlHit].hpHero<=0){
+            if (heldenListe[auswahlHit].isProtected) {
+                println("${heldenListe[auswahlHit].name} wird durch einen Zauber geschützt und kann nicht angegriffen werden.")
+                println("Der Angriff schlug fehl.")
+                println()
+            } else {
+                println("Der Troll setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
+                heldenListe[auswahlHit].hpHero -= mittlererSchaden
+                if (heldenListe[auswahlHit].hpHero <= 0) {
                     println("${heldenListe[auswahlHit].name} wurde eliminiert")
                     eliminierteHelden.add(heldenListe[auswahlHit])
                 }
-        }
+            }
         heldenListe.removeAll(eliminierteHelden)
     }
 
@@ -70,6 +70,7 @@ for (hero in HeroMutableList){
         var auswahlHit = (0..<heldenListe.size).random()
         var eliminierteHelden: MutableList<Hero> = mutableListOf()
 
+        for (hero in heldenListe)
         if (heldenListe[auswahlHit].isProtected) {
             println("${heldenListe[auswahlHit].name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
             println("Der Angriff schlug fehl.")

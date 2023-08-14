@@ -5,8 +5,7 @@ import geringerFlächenSchaden
 import mittlererFlächenSchaden
 import org.w3c.dom.css.Counter
 
-class Magier (name : String, hpHero: Int = 50) : Hero(name,hpHero) {
-
+class Magier (name : String, hpHero: Int = 10000) : Hero(name,hpHero) {
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
@@ -42,16 +41,19 @@ class Magier (name : String, hpHero: Int = 50) : Hero(name,hpHero) {
         }
         println()
     }
-        fun schutzZauberHero() {
-            isProtected = true
-            protectionCountdown = 4
-            println("Der Schutzzauber wurde aktiviert. Die Helden sind für die nächsten zwei Runden geschützt.")
+    fun schutzZauberHero(heldenListe: MutableList<Hero>) {
+        for (hero in heldenListe) {
+            hero.isProtected = true
+            hero.protectionCountdown = 2 // Für zwei Runden geschützt, nicht vier.
+            println("${hero.name}'s Schutzzauber wurde aktiviert.")
         }
+        println("Rundencountdown Schutzzauber: $protectionCountdown")
+    }
 
 
             //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
 
-    override fun attackeWählen(gegnerListe: List<Gegner>) {
+    override fun attackeWählen(gegnerListe: List<Gegner>, heldenListe: MutableList<Hero>) {
         println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
         println("1. Hagelschaden (Flächenschaden)")
         println("2. Feuerball (Flächenschaden)")
@@ -66,13 +68,13 @@ class Magier (name : String, hpHero: Int = 50) : Hero(name,hpHero) {
             when (choice){
                 1 -> hagelSchadenHero(gegnerListe)
                 2 -> feuerBallHero(gegnerListe)
-                3 -> {schutzZauberHero()
+                3 -> {schutzZauberHero(heldenListe)
                 }
             }
         }catch (e : Exception){
             println("Ups, $e ")
             println("Bitte prüfe deine Eingabe.")
-            attackeWählen(gegnerListe)
+            attackeWählen(gegnerListe,heldenListe)
         }
 
     }
