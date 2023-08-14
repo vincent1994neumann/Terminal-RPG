@@ -1,5 +1,11 @@
 package Helden
 
+import ANSI_BRIGHT_BLUE
+import ANSI_DARK_RED
+import ANSI_GREEN
+import ANSI_ORANGE
+import ANSI_RESET
+import ANSI_YELLOW
 import Gegner.Gegner
 import geringerSchaden
 import hpÜberischtHero
@@ -18,16 +24,16 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     open fun kleineAttacke (gegner: List<Gegner>){
         var kleinerSchaden = geringerSchaden()
         var ziel = gegnerWählen(gegner)
-        println("Der $name greift mit Attacke -Schlagen- an.")
+        println("$ANSI_GREEN Der $name greift mit Attacke -Schlagen- an.")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println("Der Troll absorbiert deinen Angriff mit Magie.")
+            println(" Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
+            println(" $name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
             ziel.hpGegner -= kleinerSchaden
         }
         if (ziel.hpGegner <= 0) {
-            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+            println(" Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.$ANSI_RESET")
         }
         println()
     }
@@ -67,77 +73,56 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     }
 
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
-        println(gegnerListe)
+        println("$ANSI_BRIGHT_BLUE Welchen Gegner möchtest du angreifen?$ANSI_RESET")
+        var resultGegner = ""
+        for (i in gegnerListe.indices) {
+            resultGegner += "$ANSI_ORANGE ${i + 1}. ${gegnerListe[i]} $ANSI_RESET"
+            if (i != gegnerListe.size - 1) {
+                resultGegner += " ;  "
+            }
+        }
+        println(resultGegner)
+        println("$ANSI_BRIGHT_BLUE Wählen Sie die entsprechende Nummer: $ANSI_RESET")
         hpÜbersichtGegner(gegnerListe.toMutableList())
-        println("Welchen Gegner möchtest du angreifen?")
-        println("Wählen Sie die entsprechende Nummer:")
+
         var choice = readln().toIntOrNull()
         if (choice != null && choice in 1..gegnerListe.size) {
             return gegnerListe[choice - 1]
             println(gegnerListe[choice])
         } else {
-            println("Deine Eingabe war falsch, bitte wähle erneut.")
+            println("$ANSI_DARK_RED Deine Eingabe war falsch, bitte wähle erneut.$ANSI_RESET")
             return gegnerWählen(gegnerListe)
         }
     }
 
-    open fun trinkHeiltrank(heldenListe: MutableList<Hero>) {
-        if (0==0) {//beutel.benutzeHeiltrank()
-            println("Alle Helden erhalten + 50% HP.")
-            for (hero in heldenListe) {
-                hero.hpHero *= 1.5
-
-            }
-            hpÜberischtHero(heldenListe)
-
-        }
-    }
-
-    open fun trinkAngriffstrank(heldenListe: MutableList<Hero>){
-        if (0==0
-        ){//beutel.benutzeAngriffstrank()
-            println("Alle Helden erhalten + 50% HP.")
-
-            for(hero in heldenListe){
-
-            }
-        }
-    }
-
-
-
     open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
-        println("Bitte wähle eine Aktion:")
-        println("1. Attacke:            Schlagen")
-        println("2. Attacke:            Stechen")
-        println("3. Attacke:            Spezialattacke")
-        println()
-        println("Welche Aktion möchtest du auswählen:")
+        println("$ANSI_BRIGHT_BLUE Bitte wähle eine Aktion: $ANSI_RESET")
+        println("$ANSI_ORANGE 1. Attacke:            Schlagen $ANSI_RESET")
+        println("$ANSI_ORANGE 2. Attacke:            Stechen $ANSI_RESET")
+        println("$ANSI_ORANGE 3. Attacke:            Spezialattacke $ANSI_RESET")
+        println("$ANSI_BRIGHT_BLUE Welche Aktion möchtest du auswählen:$ANSI_RESET")
     try {
         var choice = readln().toInt()
         when (choice){
             1 -> {
                 kleineAttacke(gegnerList)
-                hpÜberischtHero(heldenListe)
             }
             2 -> {
                 mittlereAttacke(gegnerList)
-                hpÜberischtHero(heldenListe)
             }
             3 -> {
                 spezialAttacke(gegnerList)
-                hpÜberischtHero(heldenListe)
             }
             else -> {
-                println("Ungültige Auswahl!")
+                println("$ANSI_DARK_RED Ungültige Auswahl!$ANSI_RESET")
                 attackeWählen(gegnerList,heldenListe)
             }
 
         }
 
     }catch (e : Exception){
-            println("Ups, $e ")
-            println("Bitte prüfe deine Eingabe.")
+            println("$ANSI_DARK_RED Ups, $e ")
+            println("Bitte prüfe deine Eingabe. $ANSI_RESET")
             attackeWählen(gegnerList,heldenListe)
         }
     }

@@ -1,5 +1,10 @@
 import Gegner.Gegner
 import Helden.Hero
+const val ANSI_GREEN = "\u001B[32m"
+const val ANSI_DARK_RED = "\u001B[31m"
+
+
+
 
 fun geringerSchaden(): Int {
     return (50..150).random()
@@ -29,7 +34,7 @@ fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
 
             println("Der Gegner ${gegner.name} wurde von Dir erfolgreich besiegt!")
         } else {
-            println("${gegner.name} HP: ${gegner.hpGegner} ")
+            println("$ANSI_DARK_RED ${gegner.name} HP: ${gegner.hpGegner.toInt()} $ANSI_RESET")
         }
     }
     println()
@@ -44,7 +49,7 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
             eliminierteHelden.add(hero)
             println("Ihr Held ${hero.name} wurde eliminiert!")
         } else {
-            println("${hero.name} HP: ${hero.hpHero.toInt()} ")
+            println("$ANSI_GREEN ${hero.name} HP: ${hero.hpHero.toInt()} $ANSI_RESET")
 
         }
     }
@@ -59,7 +64,7 @@ fun isProtected (heldenListe: MutableList<Hero>){
     }
         if (hero.protectionCountdown == 0) {
         hero.isProtected = false
-    }
+        }
     }
 
 }

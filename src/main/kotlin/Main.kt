@@ -1,11 +1,18 @@
-import Gegner.DunklerRitter
-import Gegner.Gegner
-import Gegner.Goblin
-import Gegner.Troll
+import Gegner.*
 import Helden.*
+const val ANSI_RESET = "\u001B[0m"
+const val ANSI_RED = "\u001B[31m"
+const val ANSI_DARK_BLUE = "\u001B[34m"
+const val ANSI_YELLOW = "\u001B[33m"
+val ANSI_ORANGE = "\u001B[38;2;255;165;0m"
+val ANSI_NEON_GREEN = "\u001B[92m"
+val ANSI_BRIGHT_BLUE = "\u001B[94m"
+val ANSI_BLACK = "\u001B[30m"
+
+
+
 
 fun main() {
-
 
     // Gemeinsamer Beutel - globale Instanz, sodass ein BEutel für alle Helden gilt
     var beutel = Beutel(2, 1)
@@ -25,10 +32,10 @@ fun main() {
 
     fun gegnerAngreifLogik(hero: Hero) {
         if (hero.isProtected) {
-            println("Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
-            println("Runden-Countdown Schutzzauber: ${hero.protectionCountdown} ")
+            println("$ANSI_ORANGE Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
+            println(" Runden-Countdown Schutzzauber: ${hero.protectionCountdown} $ANSI_RESET")
         } else {
-            println("Der Gegner holt zur Attacke aus!")
+            println("$ANSI_BROWN Der Gegner holt zur Attacke aus!$ANSI_RESET")
             Thread.sleep(500)
             var angreifenderGegner = gegnerListe.random()
             when (angreifenderGegner) {
@@ -42,10 +49,18 @@ fun main() {
         }
     }
 
-    fun heroWählen(heldenList: MutableList<Hero>): Hero {
-        println(heldenList)
-        println("Mit welchem Helden wollen Sie angreifen?")
-        println("Wählen Sie die entsprechende Nummer:")
+    fun heroWählen(heldenList: MutableList<Hero>): Hero { //Danke Chat GPT - hier hat Chat GPT mir die Logik kreiert
+        println("$ANSI_BRIGHT_BLUE Mit welchem Helden wollen Sie angreifen?$ANSI_RESET")
+        var result = ""
+        for (i in heldenList.indices) {
+            result += "$ANSI_ORANGE ${i + 1}. ${heldenList[i]} $ANSI_RESET"
+            if (i != heldenList.size - 1) {
+                result += "; "
+            }
+        }
+        println(result)
+
+        println("$ANSI_BRIGHT_BLUE Wählen Sie die entsprechende Nummer:$ANSI_RESET")
         var choice = readln().toIntOrNull() // sollte kein Int eingegeben werden wird Null zurückgegeben
 
         if (choice != null && choice in 1..heldenList.size) {
@@ -65,27 +80,46 @@ fun main() {
         println("Übersicht Lebenspunkte Helden:")
         hpÜberischtHero(heldenListe)
         println()
-        println("Möchten Sie den Beutel öffnen oder kämpfen?")
-        println("1. Beutel öffnen")
-        println("2. Kämpfen")
+        println("$ANSI_BRIGHT_BLUE Möchten Sie den Beutel öffnen oder kämpfen?$ANSI_RESET")
+        println("$ANSI_ORANGE 1. Kämpfen$ANSI_RESET")
+        println("$ANSI_ORANGE 2. Beutel öffnen$ANSI_RESET")
+        println("$ANSI_BRIGHT_BLUE Bitte wählen Sie:$ANSI_RESET")
         //GGF noch mal abfangen prüfen
         when (readln().toIntOrNull()) {
             1 -> {
-                println("Beutelinhalt:")
-                println("1. Heiltrank: ${beutel.heiltränke}")
-                println("2. Angriffstrank: ${beutel.angriffstrank}")
-            }
-                2 -> {
-                    println("Übersicht Lebenspunkte Gegner:")
-                    hpÜbersichtGegner(gegnerListe)
-                    println("Übersicht Lebenspunkte Helden:")
-                    hpÜberischtHero(heldenListe)
-                    println()
-                    var ausgewählterHeld = heroWählen(heldenListe)
-                    println(ausgewählterHeld)
-                    ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
-                    println()
+                println()
+                var ausgewählterHeld = heroWählen(heldenListe)
+                println("$ANSI_GREEN Gewählter Held: ${ausgewählterHeld} $ANSI_RESET")
+                ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
+                println()
+                hpÜbersichtGegner(gegnerListe)
 
+            }
+                2 ->
+            {
+                println("$ANSI_YELLOW Beutelinhalt:$ANSI_RESET")
+                println("$ANSI_YELLOW 1. Heiltrank: $ANSI_RESET ${beutel.heiltränke}")
+                println("$ANSI_YELLOW 2. Fluchtrank:$ANSI_RESET ${beutel.fluchTrank}")
+                println("Bitte wählen Sie:")
+                var choice = readln().toIntOrNull()
+                when (choice){
+                    1-> {
+                        if (beutel.heiltränke < 1) {
+                            println("Keine Heiltränke mehr verfügbar!")
+                        } else {
+                            beutel.aufrufHeiltrank(heldenListe)
+                            beutel.heiltränke--
+                            println("---------------50 % HP LevelUp---------------")
+                            hpÜberischtHero(heldenListe)
+                        }
+                    }
+                    2->{
+                        beutel.aufrufFluchTrank(gegnerListe)
+                        beutel.fluchEffektAnwenden(gegnerListe)
+                        hpÜbersichtGegner(gegnerListe)
+
+                    }
+                }
                 }
             }
         }
@@ -96,7 +130,8 @@ fun main() {
         var gameOver = false
 
         while (!gameOver) {
-            println("----------------- RUNDE $counter -------------------")
+            println("$ANSI_RED----------------- RUNDE $counter -------------------$ANSI_RESET")
+            beutel.fluchEffektAnwenden(gegnerListe)
             Thread.sleep(1000)
             isProtected(heldenListe)
             heroAngreifLogik()
@@ -109,6 +144,8 @@ fun main() {
                 gameOver = true
                 continue
             }
+
+
 
             // Wenn es noch Gegner gibt, lass sie angreifen
             if (gegnerListe.isNotEmpty()) {
