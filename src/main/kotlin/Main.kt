@@ -22,20 +22,20 @@ fun main() {
     var gegnerListe: MutableList<Gegner> = mutableListOf(gegner1, gegner2, gegner3)
 
 
-    fun gegnerAngreifLogik() {
-        if (held1.isProtected) {
-            println()
-            println("Aufgrund des Schutzzaubers wäre ein Angriff wirkungslos.")
-            held1.protectionCountdown--
+    fun gegnerAngreifLogik(hero: Hero) {
+        if (hero.isProtected) {
+            println("Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
+            println("Runden-Countdown Schutzzauber: ${hero.protectionCountdown} ")
         } else {
-            println("Der Gegner holt zur Attacke aus!")
+                println("Der Gegner holt zur Attacke aus!")
             Thread.sleep(500)
             var angreifenderGegner = gegnerListe.random()
             when (angreifenderGegner) {
                 gegner1 -> gegner1.auswahlAttackeTroll(heldenListe)
                 gegner2 -> gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
                 gegner3 -> gegner3.auswahlAttackeGoblin(heldenListe.random())
-            }
+
+        }
             println()
             Thread.sleep(1500)
         }
@@ -76,6 +76,7 @@ fun main() {
         while (!gameOver) {
             println("----------------- RUNDE $counter -------------------")
             Thread.sleep(1000)
+            isProtected(heldenListe)
             heroAngreifLogik()
             Thread.sleep(500)
 
@@ -91,30 +92,7 @@ fun main() {
             if (gegnerListe.isNotEmpty()) {
                 println("--------------- Der Gegner ist dran ---------------")
                 Thread.sleep(1000)
-
-                if (held1.isProtected && held1.protectionCountdown > 1){
-                    println("Die Helden werden durch den Schutzzauber geschützt.")
-                    println("Wirkung des Schutzzaubers: ${held1.protectionCountdown} Runde/n")
-                } else if (held1.protectionCountdown == 1){
-                    println("Der Schutzzauber hält nur noch diese Runde.")
-                    held1.isProtected = false
-                }
-
-
-
-
-                /*
-                for (hero in heldenListe) {
-                    if (hero.isProtected) {
-                        println("${hero.name} wird durch ein Schutzzauber geschützt.")
-                        hero.protectionCountdown--}
-                    else if (hero.protectionCountdown == 0) {
-                        hero.isProtected = false
-                        println("Der Schutzzauber hat nachgelassen.")
-                        }
-                }
-                */
-                gegnerAngreifLogik()
+                gegnerAngreifLogik(held1)
                 hpÜberischtHero(heldenListe)
 
                 // Prüfe erneut, ob alle Helden nach dem Angriff der Gegner besiegt wurden

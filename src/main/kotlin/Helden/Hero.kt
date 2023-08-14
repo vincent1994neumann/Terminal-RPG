@@ -2,6 +2,7 @@ package Helden
 
 import Gegner.Gegner
 import geringerSchaden
+import hpÜberischtHero
 import hpÜbersichtGegner
 import kritischerSchaden
 import mittlererSchaden
@@ -80,6 +81,30 @@ open class Hero (var name : String, var hpHero:Int, var isProtected : Boolean = 
         }
     }
 
+var beutel : Beutel = Beutel(2,1)
+    open fun trinkHeiltrank(heldenListe: MutableList<Hero>) {
+        if (beutel.benutzeHeiltrank()) {
+            println("Alle Helden erhalten + 50% HP.")
+            for (hero in heldenListe) {
+                hero.hpHero *= 1.5
+                beutel.heiltränke -= 1
+            }
+            hpÜberischtHero(heldenListe)
+
+        }
+    }
+
+    open fun trinkAngriffstrank(heldenListe: MutableList<Hero>){
+        if (beutel.benutzeAngriffstrank()){
+            println("Alle Helden erhalten + 50% HP.")
+
+            for(hero in heldenListe){
+
+            }
+        }
+    }
+
+
 
     open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
         println("Bitte wähle die Attacke, mit der du angreifen möchtest.")
@@ -95,7 +120,27 @@ open class Hero (var name : String, var hpHero:Int, var isProtected : Boolean = 
             1 -> kleineAttacke(gegnerList)
             2 -> mittlereAttacke(gegnerList)
             3 -> spezialAttacke(gegnerList)
+            4 -> {
+                println("1. Heiltrank: ${beutel.heiltränke}")
+                println("2. Angriffstrank: ${beutel.angriffstrank}")
+
+                when   (val choiceTrank = readln().toInt()){
+                    1 -> trinkHeiltrank(heldenListe)
+                    2 -> "Test Angriffstrank"
+                    else -> {
+                        println("Ungültige Auswahl")
+                        attackeWählen(gegnerList,heldenListe)
+                    }
+
+                }
+            }
+            else -> {
+                println("Ungültige Auswahl!")
+                attackeWählen(gegnerList,heldenListe)
+            }
+
         }
+
     }catch (e : Exception){
             println("Ups, $e ")
             println("Bitte prüfe deine Eingabe.")

@@ -50,9 +50,6 @@ for (hero in HeroMutableList){
         var auswahlHit = (0..<heldenListe.size).random()
         var eliminierteHelden : MutableList<Hero> = mutableListOf()
             if (heldenListe[auswahlHit].isProtected) {
-                println("${heldenListe[auswahlHit].name} wird durch einen Zauber geschützt und kann nicht angegriffen werden.")
-                println("Der Angriff schlug fehl.")
-                println()
             } else {
                 println("Der Troll setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
                 heldenListe[auswahlHit].hpHero -= mittlererSchaden
@@ -72,8 +69,6 @@ for (hero in HeroMutableList){
 
         for (hero in heldenListe)
         if (heldenListe[auswahlHit].isProtected) {
-            println("${heldenListe[auswahlHit].name} ist durch einen Zauber geschützt und kann nicht angegriffen werden.")
-            println("Der Angriff schlug fehl.")
         } else {
             println("Der Troll setzt die Attacke -Umrennen- ein und verursacht $kritischerSchaden Schaden beim Helden ${heldenListe[auswahlHit].name}.")
             heldenListe[auswahlHit].hpHero -= kritischerSchaden

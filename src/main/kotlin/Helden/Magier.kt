@@ -47,7 +47,7 @@ class Magier (name : String, hpHero: Int = 10000) : Hero(name,hpHero) {
             hero.protectionCountdown = 2 // Für zwei Runden geschützt, nicht vier.
             println("${hero.name}'s Schutzzauber wurde aktiviert.")
         }
-        println("Rundencountdown Schutzzauber: $protectionCountdown")
+        println("Runden-Countdown Schutzzauber: $protectionCountdown")
     }
 
 
