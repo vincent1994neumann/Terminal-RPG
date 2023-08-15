@@ -15,22 +15,22 @@ open class Gegner (var name : String,var hpGegner: Double){
 
     open fun kleineAttackeGegner (Hero: Hero){
         var kleinerSchaden = geringerSchaden()
-        println("$ANSI_BROWN $name greift mit Attacke -Schlagen- an.")
+        println(" $name $ANSI_BROWN greift mit Attacke -Schlagen- an.$ANSI_RESET")
         Thread.sleep(500)
         if (Hero.isProtected) {
         }else {
-            println("$name verursacht $kleinerSchaden Schaden bei ${Hero.name}. $ANSI_RESET")
+            println(" $name $ANSI_BROWN verursacht $kleinerSchaden Schaden bei $ANSI_RESET ${Hero.name}.")
             Hero.hpHero-=kleinerSchaden
         }
     }
 
     open fun mittlereAttackeGegner (Hero: Hero) {
         var mittlererSchaden = mittlererSchaden()
-        println("$ANSI_BROWN $name greift mit Attacke -Stechen- an.")
+        println(" $name $ANSI_BROWN greift mit Attacke -Stechen- an.$ANSI_RESET")
         Thread.sleep(500)
         if (Hero.isProtected) {
         } else {
-            println("$name verursacht $mittlererSchaden Schaden bei ${Hero.name}.$ANSI_RESET")
+            println(" $name $ANSI_BROWN verursacht $mittlererSchaden Schaden bei $ANSI_RESET ${Hero.name}.")
             Hero.hpHero -= mittlererSchaden
         }
     }

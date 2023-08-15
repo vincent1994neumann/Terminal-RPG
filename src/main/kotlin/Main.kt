@@ -17,16 +17,16 @@ fun main() {
     // Gemeinsamer Beutel - globale Instanz, sodass ein BEutel für alle Helden gilt
     var beutel = Beutel(2, 1)
     // Helden
-    var held1 = Ritter("Ritter")
-    var held2 = Bogenschütze("Bogenschütze")
-    var held3 = Magier("Magier")
+    var held1 = Ritter( "$ANSI_NEON_GREEN Ritter$ANSI_RESET")
+    var held2 = Bogenschütze("$ANSI_NEON_GREEN Bogenschütze$ANSI_RESET")
+    var held3 = Magier("$ANSI_NEON_GREEN Magier$ANSI_RESET")
     var heldenListe: MutableList<Hero> = mutableListOf(held1, held2, held3)
 
 
     // Gegner
-    var gegner1 = Troll("Troll")
-    var gegner2 = DunklerRitter("Dunkler Ritter")
-    var gegner3 = Goblin("Goblin")
+    var gegner1 = Troll("$ANSI_DARK_RED Troll$ANSI_RESET")
+    var gegner2 = DunklerRitter("$ANSI_DARK_RED Dunkler Ritter$ANSI_RESET")
+    var gegner3 = Goblin("$ANSI_DARK_RED Goblin$ANSI_RESET")
     var gegnerListe: MutableList<Gegner> = mutableListOf(gegner1, gegner2, gegner3)
 
 
@@ -97,10 +97,10 @@ fun main() {
             }
                 2 ->
             {
-                println("$ANSI_YELLOW Beutelinhalt:$ANSI_RESET")
-                println("$ANSI_YELLOW 1. Heiltrank: $ANSI_RESET ${beutel.heiltränke}")
-                println("$ANSI_YELLOW 2. Fluchtrank:$ANSI_RESET ${beutel.fluchTrank}")
-                println("Bitte wählen Sie:")
+                println("$ANSI_ORANGE Beutelinhalt:$ANSI_RESET")
+                println("$ANSI_ORANGE 1. Heiltrank: $ANSI_RESET ${beutel.heiltränke}")
+                println("$ANSI_ORANGE 2. Fluchtrank:$ANSI_RESET ${beutel.fluchTrank}")
+                println("$ANSI_BRIGHT_BLUE Bitte wählen Sie:$ANSI_RESET")
                 var choice = readln().toIntOrNull()
                 when (choice){
                     1-> {
@@ -109,7 +109,7 @@ fun main() {
                         } else {
                             beutel.aufrufHeiltrank(heldenListe)
                             beutel.heiltränke--
-                            println("---------------50 % HP LevelUp---------------")
+                            println("$ANSI_NEON_GREEN---------------50 % HP LevelUp---------------$ANSI_RESET")
                             hpÜberischtHero(heldenListe)
                         }
                     }
@@ -139,8 +139,8 @@ fun main() {
 
             // Prüfe, ob alle Helden besiegt wurden
             if (heldenListe.isEmpty()) {
-                println("Alle Helden wurden besiegt!")
-                println("Sie haben VERLOREN!!!")
+                println("$ANSI_DARK_RED Alle Helden wurden besiegt! $ANSI_RESET")
+                println("$ANSI_DARK_RED Sie haben VERLOREN!!! $ANSI_RESET")
                 gameOver = true
                 continue
             }
@@ -149,31 +149,35 @@ fun main() {
 
             // Wenn es noch Gegner gibt, lass sie angreifen
             if (gegnerListe.isNotEmpty()) {
-                println("--------------- Der Gegner ist dran ---------------")
+                println("$ANSI_BROWN--------------- Der Gegner ist dran ---------------$ANSI_RESET")
+                println()
                 Thread.sleep(1000)
                 gegnerAngreifLogik(held1)
                 hpÜberischtHero(heldenListe)
 
                 // Prüfe erneut, ob alle Helden nach dem Angriff der Gegner besiegt wurden
                 if (heldenListe.isEmpty()) {
-                    println("Alle Helden wurden nach dem Angriff der Gegner besiegt!")
-                    println("Sie haben VERLOREN!!!")
+                    println("$ANSI_DARK_RED Alle Helden wurden nach dem Angriff der Gegner besiegt!$ANSI_RESET")
+                    println("$ANSI_DARK_RED Sie haben VERLOREN!!!$ANSI_RESET")
                     gameOver = true
+                    break
                 }
 
-                println("Runde $counter ist vorbei. Es gibt noch keinen Gewinner.")
+                println("$ANSI_BROWN Runde $ANSI_RESET $ANSI_DARK_RED $counter $ANSI_RESET $ANSI_BROWN ist vorbei. Es gibt noch keinen Gewinner.$ANSI_RESET")
                 Thread.sleep(1500)
                 counter++
-                println("Mach dich bereit für Runde $counter!")
+                println("$ANSI_BROWN Mach dich bereit für Runde $ANSI_RESET $ANSI_DARK_RED $counter $ANSI_RESET!")
+                println()
             } else {
-                println("Es wurden alle Gegner erfolgreich eliminiert!")
+                println("$ANSI_NEON_GREEN Es wurden alle Gegner erfolgreich eliminiert!$ANSI_RESET")
                 Thread.sleep(1500)
-                println("Sie haben GEWONNEN!!!")
+                println("$ANSI_NEON_GREEN Sie haben GEWONNEN!!!$ANSI_RESET")
                 Thread.sleep(1500)
                 gameOver = true
             }
         }
-        println("Das Spiel ist vorbei! Vielen Dank fürs spielen.")
+        println("$ANSI_NEON_GREEN Das Spiel ist vorbei! Vielen Dank fürs spielen.$ANSI_RESET")
+        println("$ANSI_NEON_GREEN Sie haben $counter Runden gebraucht!$ANSI_RESET")
     }
 
 

@@ -1,3 +1,4 @@
+import Gegner.ANSI_BROWN
 import Gegner.Gegner
 import Helden.Hero
 const val ANSI_GREEN = "\u001B[32m"
@@ -32,9 +33,9 @@ fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
         if (gegner.hpGegner <= 0) {
             eliminierteGegner.add(gegner)
 
-            println("Der Gegner ${gegner.name} wurde von Dir erfolgreich besiegt!")
+            println(" Der Gegner ${gegner.name} wurde von Dir erfolgreich besiegt!")
         } else {
-            println("$ANSI_DARK_RED ${gegner.name} HP: ${gegner.hpGegner.toInt()} $ANSI_RESET")
+            println("$ANSI_BROWN ${gegner.name} HP: ${gegner.hpGegner.toInt()} $ANSI_RESET")
         }
     }
     println()
@@ -47,7 +48,7 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
     for (hero in heldenListe) {
         if (hero.hpHero <= 0) {
             eliminierteHelden.add(hero)
-            println("Ihr Held ${hero.name} wurde eliminiert!")
+            println("  Ihr Held ${hero.name} wurde eliminiert!")
         } else {
             println("$ANSI_GREEN ${hero.name} HP: ${hero.hpHero.toInt()} $ANSI_RESET")
 

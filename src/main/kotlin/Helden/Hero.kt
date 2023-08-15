@@ -24,12 +24,12 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     open fun kleineAttacke (gegner: List<Gegner>){
         var kleinerSchaden = geringerSchaden()
         var ziel = gegnerWählen(gegner)
-        println("$ANSI_GREEN Der $name greift mit Attacke -Schlagen- an.")
+        println(" Der $name greift mit Attacke -Schlagen- an.")
         Thread.sleep(500)
         if (ziel.trollProtection) {
             println(" Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println(" $name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
+            println("$name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
             ziel.hpGegner -= kleinerSchaden
         }
         if (ziel.hpGegner <= 0) {
@@ -41,16 +41,16 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     open fun mittlereAttacke (gegner: List<Gegner>) {
         var mittlererSchaden = mittlererSchaden()
         var ziel = gegnerWählen(gegner)
-        println("Der $name greift mit Attacke -Stechen- an.")
+        println(" Der $name greift mit Attacke -Stechen- an.")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println("Der Troll absorbiert deinen Angriff mit Magie.")
+            println(" Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
+            println(" $name trifft $ziel und verursacht $mittlererSchaden Schaden.")
             ziel.hpGegner-=mittlererSchaden
         }
         if (ziel.hpGegner <= 0) {
-            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+            println("$ANSI_GREEN Der Gegner ${ziel.name} $ANSI_GREEN wurde durch den Angriff eliminiert.$ANSI_RESET")
         }
         println()
     }
@@ -58,22 +58,23 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     open fun spezialAttacke (gegner: List<Gegner>){
         var kritischerSchaden = kritischerSchaden()
         var ziel = gegnerWählen(gegner)
-        println("Der $name greift mit seiner -Spezialattacke- an.")
+        println(" Der $name greift mit seiner -Spezialattacke- an. ")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println("Der Troll absorbiert deinen Angriff mit Magie.")
+            println(" Der Troll absorbiert deinen Angriff mit Magie. ")
         } else {
-            println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
+            println(" Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
             ziel.hpGegner -= kritischerSchaden
         }
         if (ziel.hpGegner <= 0) {
-            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
+            println("$ANSI_GREEN Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.$ANSI_RESET")
         }
         println()
     }
 
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
         println("$ANSI_BRIGHT_BLUE Welchen Gegner möchtest du angreifen?$ANSI_RESET")
+        hpÜbersichtGegner(gegnerListe.toMutableList())
         var resultGegner = ""
         for (i in gegnerListe.indices) {
             resultGegner += "$ANSI_ORANGE ${i + 1}. ${gegnerListe[i]} $ANSI_RESET"
@@ -83,7 +84,7 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
         }
         println(resultGegner)
         println("$ANSI_BRIGHT_BLUE Wählen Sie die entsprechende Nummer: $ANSI_RESET")
-        hpÜbersichtGegner(gegnerListe.toMutableList())
+
 
         var choice = readln().toIntOrNull()
         if (choice != null && choice in 1..gegnerListe.size) {

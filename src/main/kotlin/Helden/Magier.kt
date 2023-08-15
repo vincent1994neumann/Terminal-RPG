@@ -3,6 +3,7 @@ package Helden
 import ANSI_BRIGHT_BLUE
 import ANSI_DARK_RED
 import ANSI_GREEN
+import ANSI_NEON_GREEN
 import ANSI_ORANGE
 import ANSI_RESET
 import Gegner.Gegner
@@ -11,20 +12,20 @@ import hpÜbersichtGegner
 import mittlererFlächenSchaden
 import org.w3c.dom.css.Counter
 
-class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
-        println("Der Magier greift mit der Attacke -Hagelschaden- an.")
+        println("  Der $ANSI_NEON_GREEN Magier $ANSI_RESET greift mit der Attacke -Hagelschaden- an.")
         Thread.sleep(500)
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
-                println("Der Troll absorbiert deinen Angriff mit Magie.")
+                println(" Der Troll absorbiert deinen Angriff mit Magie.")
             } else {
-                println("$name trifft $gegner und fügt $geringerFlächenSchaden Schaden zu.")
+                println(" $name trifft $gegner und fügt $geringerFlächenSchaden Schaden zu.")
                 gegner.hpGegner -= geringerFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("  Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
         }
@@ -33,15 +34,15 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
 
     fun feuerBallHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val mittlererFlächenSchaden = mittlererFlächenSchaden()
-        println("Der Magier greift mit der Attacke Feuerball an.")
+        println("  Der $ANSI_NEON_GREEN Magier $ANSI_RESET greift mit der Attacke Feuerball an.")
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
-                println("Der Troll absorbiert deinen Angriff mit Magie.")
+                println(" Der Troll absorbiert deinen Angriff mit Magie.")
             } else {
-                println("$name trifft $gegner und verursacht $mittlererFlächenSchaden Schaden.")
+                println(" $name trifft $gegner und verursacht $mittlererFlächenSchaden Schaden.")
                 gegner.hpGegner -= mittlererFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("  Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
         }
@@ -51,9 +52,9 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
         for (hero in heldenListe) {
             hero.isProtected = true
             hero.protectionCountdown = 2 // Für zwei Runden geschützt, nicht vier.
-            println("$ANSI_ORANGE ${hero.name}'s Schutzzauber wurde aktiviert.")
+            println(" ${hero.name}'s Schutzzauber wurde aktiviert.")
         }
-        println(" Runden-Countdown Schutzzauber: $protectionCountdown $ANSI_RESET")
+        println("$ANSI_ORANGE  Runden-Countdown Schutzzauber: $protectionCountdown $ANSI_RESET")
     }
 
 
@@ -72,11 +73,11 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
             when (choice){
                 1 -> {
                     hagelSchadenHero(gegnerListe)
-                    hpÜbersichtGegner(gegnerListe.toMutableList())
+
                 }
                 2 -> {
                     feuerBallHero(gegnerListe)
-                    hpÜbersichtGegner(gegnerListe.toMutableList())
+
                 }
                 3 -> {schutzZauberHero(heldenListe)
                 }
