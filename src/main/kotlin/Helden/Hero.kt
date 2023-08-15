@@ -12,7 +12,10 @@ import kritischerSchaden
 import mittlererSchaden
 
 open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean = false){
-
+init {
+    println("Ein $name wurde beschworen und steht dir zum Kampf bereit!")
+    Thread.sleep(500)
+}
     open var protectionCountdown = 0
     open var spezialAttackeVerfügbar = 1
     open var mittlereAttackeVerfügbar = 2

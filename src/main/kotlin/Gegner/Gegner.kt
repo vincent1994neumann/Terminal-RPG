@@ -6,7 +6,10 @@ import geringerSchaden
 import mittlererSchaden
 
 open class Gegner (var name : String,var hpGegner: Double){
-
+init {
+    println("Ein wilder $name wurde beschworen.")
+    Thread.sleep(500)
+}
 
     var trollProtection : Boolean = false
     var fluchRunden: Int = 0

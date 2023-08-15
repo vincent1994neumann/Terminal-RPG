@@ -10,22 +10,22 @@ import Gegner.Gegner
 import geringerFlächenSchaden
 import mittlererFlächenSchaden
 
-class Magier (name : String, hpHero: Double = 5000.0) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
 
     open var feuerBallCounter = 2
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
-        println("  Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke -Hagelschaden- an.")
+        println("Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke -Hagelschaden- an.")
         Thread.sleep(500)
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
-                println(" Der Troll absorbiert deinen Angriff mit Magie.")
+                println("Der Troll absorbiert deinen Angriff mit Magie.")
             } else {
-                println(" $name trifft $gegner und fügt $geringerFlächenSchaden Schaden zu.")
+                println("$name trifft $gegner und fügt $geringerFlächenSchaden Schaden zu.")
                 gegner.hpGegner -= geringerFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("  Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
         }
@@ -37,15 +37,15 @@ class Magier (name : String, hpHero: Double = 5000.0) : Hero(name,hpHero) {
             println("${ANSI_ORANGE}Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!$`{ANSI_RESET}`")
         return}
         val mittlererFlächenSchaden = mittlererFlächenSchaden()
-        println("  Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke Feuerball an.")
+        println("Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke Feuerball an.")
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
-                println(" Der Troll absorbiert deinen Angriff mit Magie.")
+                println("Der Troll absorbiert deinen Angriff mit Magie.")
             } else {
-                println(" $name trifft $gegner und verursacht $mittlererFlächenSchaden Schaden.")
+                println("$name trifft $gegner und verursacht $mittlererFlächenSchaden Schaden.")
                 gegner.hpGegner -= mittlererFlächenSchaden
                 if (gegner.hpGegner <= 0) {
-                    println("  Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
+                    println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
 
