@@ -1,27 +1,24 @@
 package Gegner
 
 import ANSI_GREEN
-import ANSI_RESET
-import Helden.Bogenschütze
+import `{ANSI_RESET}`
 import Helden.Hero
-import Helden.Magier
-import Helden.Ritter
 import geringerFlächenSchaden
 import kritischerSchaden
 import mittlererSchaden
 const val ANSI_BROWN = "\u001B[0;33m"
 
-class Troll (name: String, hpGegner: Double = 1000.0) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Double = 100.0) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     fun keulenSchwung(heldenListe: MutableList<Hero>){
         var keulenSchadenGegner = geringerFlächenSchaden()
         Thread.sleep(500)
-        println(" ${this.name} $ANSI_BROWN setzt die Attacke -Keulen Schwung- ein und trifft alle Helden mit ${geringerFlächenSchaden()} Schaden.$ANSI_RESET")
+        println(" ${this.name} $ANSI_BROWN setzt die Attacke -Keulen Schwung- ein und trifft alle Helden mit ${geringerFlächenSchaden()} Schaden.$`{ANSI_RESET}`")
             for (hero in heldenListe){
                 if (hero.isProtected){
                     println("Die Attacke ist bei ${hero.name} Wirkungslos, da der Schutzzauber vom Magier wirkt.")
-                    println("$ANSI_GREEN Der Angriff schlug fehl.$ANSI_RESET")
+                    println("$ANSI_GREEN Der Angriff schlug fehl.$`{ANSI_RESET}`")
                     println()
                 }else {
                 hero.hpHero -= keulenSchadenGegner                                    // ich muss zuerst prüfen, ob der Held beschützt wird
@@ -57,7 +54,7 @@ for (hero in HeroMutableList){
                 println("$ANSI_BROWN Der Troll setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
                 heldenListe[auswahlHit].hpHero -= mittlererSchaden
                 if (heldenListe[auswahlHit].hpHero <= 0) {
-                    println("${heldenListe[auswahlHit].name} wurde eliminiert. $ANSI_RESET")
+                    println("${heldenListe[auswahlHit].name} wurde eliminiert. $`{ANSI_RESET}`")
                     eliminierteHelden.add(heldenListe[auswahlHit])
                 }
             }
@@ -75,7 +72,7 @@ for (hero in HeroMutableList){
             println("$ANSI_BROWN Der Troll setzt die Attacke -Umrennen- ein und verursacht $kritischerSchaden Schaden beim Helden ${heldenListe[auswahlHit].name}.")
             heldenListe[auswahlHit].hpHero -= kritischerSchaden
             if (heldenListe[auswahlHit].hpHero <= 0) {
-                println("${heldenListe[auswahlHit].name} wurde eliminiert. $ANSI_RESET")
+                println("${heldenListe[auswahlHit].name} wurde eliminiert. $`{ANSI_RESET}`")
                 eliminierteHelden.add(heldenListe[auswahlHit])
             }
         }

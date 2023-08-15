@@ -35,7 +35,7 @@ fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
 
             println(" Der Gegner ${gegner.name} wurde von Dir erfolgreich besiegt!")
         } else {
-            println("$ANSI_BROWN ${gegner.name} HP: ${gegner.hpGegner.toInt()} $ANSI_RESET")
+            println("$ANSI_BROWN ${gegner.name} HP: ${gegner.hpGegner.toInt()} $`{ANSI_RESET}`")
         }
     }
     println()
@@ -50,7 +50,7 @@ fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
             eliminierteHelden.add(hero)
             println("  Ihr Held ${hero.name} wurde eliminiert!")
         } else {
-            println("$ANSI_GREEN ${hero.name} HP: ${hero.hpHero.toInt()} $ANSI_RESET")
+            println("$ANSI_GREEN ${hero.name} HP: ${hero.hpHero.toInt()} $`{ANSI_RESET}`")
 
         }
     }

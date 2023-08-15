@@ -5,18 +5,16 @@ import ANSI_DARK_RED
 import ANSI_GREEN
 import ANSI_NEON_GREEN
 import ANSI_ORANGE
-import ANSI_RESET
+import `{ANSI_RESET}`
 import Gegner.Gegner
 import geringerFlächenSchaden
-import hpÜbersichtGegner
 import mittlererFlächenSchaden
-import org.w3c.dom.css.Counter
 
 class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
-        println("  Der $ANSI_NEON_GREEN Magier $ANSI_RESET greift mit der Attacke -Hagelschaden- an.")
+        println("  Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke -Hagelschaden- an.")
         Thread.sleep(500)
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
@@ -34,7 +32,7 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
 
     fun feuerBallHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val mittlererFlächenSchaden = mittlererFlächenSchaden()
-        println("  Der $ANSI_NEON_GREEN Magier $ANSI_RESET greift mit der Attacke Feuerball an.")
+        println("  Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke Feuerball an.")
         for (gegner in gegnerListe) {
             if (gegner.trollProtection) {
                 println(" Der Troll absorbiert deinen Angriff mit Magie.")
@@ -54,20 +52,20 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
             hero.protectionCountdown = 2 // Für zwei Runden geschützt, nicht vier.
             println(" ${hero.name}'s Schutzzauber wurde aktiviert.")
         }
-        println("$ANSI_ORANGE  Runden-Countdown Schutzzauber: $protectionCountdown $ANSI_RESET")
+        println("$ANSI_ORANGE  Runden-Countdown Schutzzauber: $protectionCountdown $`{ANSI_RESET}`")
     }
 
 
             //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
 
     override fun attackeWählen(gegnerListe: List<Gegner>, heldenListe: MutableList<Hero>) {
-        println("$ANSI_GREEN Bitte wähle eine Aktion: $ANSI_RESET")
-        println("$ANSI_GREEN 1. Attacke:            $ANSI_ORANGE Hagelschaden (Flächenschaden) $ANSI_RESET")
-        println("$ANSI_GREEN 2. Attacke:            $ANSI_ORANGE Feuerball (Flächenschaden) $ANSI_RESET")
+        println("$ANSI_GREEN Bitte wähle eine Aktion: $`{ANSI_RESET}`")
+        println("$ANSI_GREEN 1.   $ANSI_ORANGE Hagelschaden (Flächenschaden) $`{ANSI_RESET}`")
+        println("$ANSI_GREEN 2.   $ANSI_ORANGE Feuerball (Flächenschaden) $`{ANSI_RESET}`")
         if (protectionCountdown == 0){
-            println("$ANSI_GREEN 3. Attacke:            $ANSI_ORANGE Schutzzauber (Schutz für 2 Runden/alle Helden )$ANSI_RESET")
+            println("$ANSI_GREEN 3.   $ANSI_ORANGE Schutzzauber (Schutz für 2 Runden/alle Helden )$`{ANSI_RESET}`")
         }
-        println("$ANSI_BRIGHT_BLUE Welche Attacke möchtest du auswählen:$ANSI_RESET")
+        println("$ANSI_BRIGHT_BLUE Welche Attacke möchtest du auswählen:$`{ANSI_RESET}`")
         try {
             var choice = readln().toInt()
             when (choice){
@@ -82,12 +80,12 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
                 3 -> {schutzZauberHero(heldenListe)
                 }
                 else -> {
-                    println("$ANSI_DARK_RED Ihre Eingabe war falsch. $ANSI_RESET")
+                    println("$ANSI_DARK_RED Ihre Eingabe war falsch. $`{ANSI_RESET}`")
                 }
             }
         }catch (e : Exception){
             println("$ANSI_DARK_RED Ups, $e ")
-            println(" Bitte prüfe deine Eingabe $ANSI_RESET.")
+            println(" Bitte prüfe deine Eingabe $`{ANSI_RESET}`.")
             attackeWählen(gegnerListe,heldenListe)
         }
 
