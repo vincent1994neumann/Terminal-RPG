@@ -50,7 +50,7 @@ fun main() {
     }
 
     fun heroWählen(heldenList: MutableList<Hero>): Hero { //Danke Chat GPT - hier hat Chat GPT mir die Logik kreiert
-        println("${ANSI_BRIGHT_BLUE}Mit welchem Helden wollen Sie angreifen?$`{ANSI_RESET}`")
+        println("Mit welchem Helden wollen Sie angreifen?")
         var result = ""
         for (i in heldenList.indices) {
             result += "$ANSI_ORANGE ${i + 1}. ${heldenList[i]} $`{ANSI_RESET}`"
@@ -60,7 +60,7 @@ fun main() {
         }
         println(result)
 
-        println("$ANSI_BRIGHT_BLUE Wählen Sie die entsprechende Nummer:$`{ANSI_RESET}`")
+        print("${ANSI_BRIGHT_BLUE}Wählen Sie die entsprechende Nummer:  $`{ANSI_RESET}`")
         var choice = readln().toIntOrNull() // sollte kein Int eingegeben werden wird Null zurückgegeben
 
         if (choice != null && choice in 1..heldenList.size) {
@@ -75,54 +75,68 @@ fun main() {
 
 
     fun heroAngreifLogik() {
+        println("----------------- HP Übersicht -----------------")
         println("Übersicht Lebenspunkte $ANSI_DARK_RED Gegner $`{ANSI_RESET}`:")
         hpÜbersichtGegner(gegnerListe)
         println("Übersicht Lebenspunkte $ANSI_NEON_GREEN Helden $`{ANSI_RESET}`:")
         hpÜberischtHero(heldenListe)
         println()
-        println("$ANSI_BRIGHT_BLUE Möchten Sie den Beutel öffnen oder kämpfen?$`{ANSI_RESET}`")
-        println("$ANSI_ORANGE 1. Kämpfen$`{ANSI_RESET}`")
-        println("$ANSI_ORANGE 2. Beutel öffnen$`{ANSI_RESET}`")
-        println("$ANSI_BRIGHT_BLUE Bitte wählen Sie:$`{ANSI_RESET}`")
+        println("${ANSI_GREEN}--------------- Angriff der Helden ---------------$`{ANSI_RESET}`")
+        println()
+        println("Möchten Sie den Beutel öffnen oder kämpfen?")
+        println("${ANSI_ORANGE}1. Kämpfen$`{ANSI_RESET}`")
+        println("${ANSI_ORANGE}2. Beutel öffnen$`{ANSI_RESET}`")
+        println()
+        print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
         //GGF noch mal abfangen prüfen
-        when (readln().toIntOrNull()) {
-            1 -> {
-                println()
-                var ausgewählterHeld = heroWählen(heldenListe)
-                println("$ANSI_GREEN Gewählter Held: ${ausgewählterHeld} $`{ANSI_RESET}`")
-                ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
-                println()
-                hpÜbersichtGegner(gegnerListe)
+        try {
+            when (readln().toIntOrNull()) {
+                1 -> {
+                    println()
+                    var ausgewählterHeld = heroWählen(heldenListe)
+                    println()
+                    println("Gewählter Held: ${ausgewählterHeld}")
+                    println()
+                    ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
+                    println()
+                    hpÜbersichtGegner(gegnerListe)
+                }
 
-            }
-                2 ->
-            {
-                println("$ANSI_ORANGE Beutelinhalt:$`{ANSI_RESET}`")
-                println("$ANSI_ORANGE 1. Heiltrank: $`{ANSI_RESET}` ${beutel.heiltränke}")
-                println("$ANSI_ORANGE 2. Fluchtrank:$`{ANSI_RESET}` ${beutel.fluchTrank}")
-                println("$ANSI_BRIGHT_BLUE Bitte wählen Sie:$`{ANSI_RESET}`")
-                var choice = readln().toIntOrNull()
-                when (choice){
-                    1-> {
-                        if (beutel.heiltränke < 1) {
-                            println("Keine Heiltränke mehr verfügbar!")
-                        } else {
-                            beutel.aufrufHeiltrank(heldenListe)
-                            beutel.heiltränke--
-                            println("$ANSI_NEON_GREEN---------------50 % HP LevelUp---------------$`{ANSI_RESET}`")
-                            hpÜberischtHero(heldenListe)
+                2 -> {
+                    println()
+                    println("${ANSI_ORANGE} Beutelinhalt:$`{ANSI_RESET}`")
+
+                    println("${ANSI_ORANGE} 1. Heiltrank: $`{ANSI_RESET}` ${beutel.heiltränke}")
+                    println("${ANSI_ORANGE} 2. Fluchtrank:$`{ANSI_RESET}` ${beutel.fluchTrank}")
+                    println()
+                    print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
+                    var choice = readln().toInt()
+                    when (choice) {
+                        1 -> {
+                            if (beutel.heiltränke < 1) {
+                                println("${ANSI_DARK_RED}Keine Heiltränke mehr verfügbar!$`{ANSI_RESET}`")
+                            } else {
+                                beutel.aufrufHeiltrank(heldenListe)
+                                beutel.heiltränke--
+                                println("$ANSI_NEON_GREEN--------------- 50 % HP LevelUp---------------$`{ANSI_RESET}`")
+                                hpÜberischtHero(heldenListe)
+                            }
+                        }
+
+                        2 -> {
+                            beutel.aufrufFluchTrank(gegnerListe)
+                            beutel.fluchEffektAnwenden(gegnerListe)
+                            hpÜbersichtGegner(gegnerListe)
+
                         }
                     }
-                    2->{
-                        beutel.aufrufFluchTrank(gegnerListe)
-                        beutel.fluchEffektAnwenden(gegnerListe)
-                        hpÜbersichtGegner(gegnerListe)
-
-                    }
-                }
                 }
             }
+        }catch (e : Exception){
+            println("$ANSI_DARK_RED Ups, $e ")
+            println("Bitte prüfe deine Eingabe. $`{ANSI_RESET}`")
         }
+    }
 
 
     fun spielrunden() {
@@ -131,8 +145,9 @@ fun main() {
 
         while (!gameOver) {
             println("$ANSI_RED----------------- RUNDE $counter -----------------$`{ANSI_RESET}`")
-            beutel.fluchEffektAnwenden(gegnerListe)
+            println()
             Thread.sleep(1000)
+            beutel.fluchEffektAnwenden(gegnerListe)
             isProtected(heldenListe)
             heroAngreifLogik()
             Thread.sleep(500)
@@ -141,6 +156,7 @@ fun main() {
             if (heldenListe.isEmpty()) {
                 println("$ANSI_DARK_RED Alle Helden wurden besiegt! $`{ANSI_RESET}`")
                 println("$ANSI_DARK_RED Sie haben VERLOREN!!! $`{ANSI_RESET}`")
+                println()
                 gameOver = true
                 continue
             }
@@ -159,6 +175,7 @@ fun main() {
                 if (heldenListe.isEmpty()) {
                     println("$ANSI_DARK_RED Alle Helden wurden nach dem Angriff der Gegner besiegt!$`{ANSI_RESET}`")
                     println("$ANSI_DARK_RED Sie haben VERLOREN!!!$`{ANSI_RESET}`")
+                    println()
                     gameOver = true
                     break
                 }
@@ -196,7 +213,40 @@ fun main() {
   |  |     | | |   |         |   |         |  
 ~~T~T~~T~T~~T~T~~  +---------+   +---------+     
     """)
-Thread.sleep(4000)
+    Thread.sleep(4000)
+    println("${ANSI_ORANGE}In \"ClashRoyalFürAnfänger\" kämpfst du gegen Feinde, um das Spiel zu gewinnen.")
+    println("Wähle deinen Helden und setze deine Fähigkeiten klug ein.")
+    println("Jede Wahl beeinflusst das Ergebnis.")
+    Thread.sleep(6000)
+        println()
+    println("Kannst du bis zum Ende bestehen?$`{ANSI_RESET}`")
+        Thread.sleep(3000)
+print("""
+                                                           
+    ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}    3    $`{ANSI_RESET}`${ANSI_GREEN} __________________|$`{ANSI_RESET}`         
+                        
+      """)
+        Thread.sleep(1000)
+print("""
+                                                           
+    ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}    2    $`{ANSI_RESET}`${ANSI_GREEN} __________________|$`{ANSI_RESET}`         
+                        
+      """)
+        Thread.sleep(750)
+print("""
+                                                           
+    ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}    1    $`{ANSI_RESET}`${ANSI_GREEN} __________________|$`{ANSI_RESET}`         
+                        
+      """)
+        Thread.sleep(500)
+print("""
+                                                           
+    ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}LET'S GO$`{ANSI_RESET}`${ANSI_GREEN} __________________|$`{ANSI_RESET}`         
+                        
+      """)
+        Thread.sleep(1000)
+
+
 
     }
 
@@ -205,7 +255,7 @@ Thread.sleep(4000)
     //-------------------------------------------------------------------------
 
 
-startscreen()
+
 spielrunden()
 
 

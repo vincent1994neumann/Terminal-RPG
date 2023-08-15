@@ -64,7 +64,6 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
         if (spezialAttackeVerfügbar <= 0) {
             println("Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!")
             return}
-
         var kritischerSchaden = kritischerSchaden()
         var ziel = gegnerWählen(gegner)
         println(" Der $name greift mit seiner -Spezialattacke- an. ")
@@ -83,8 +82,11 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     }
 
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
-        println("$ANSI_BRIGHT_BLUE Welchen Gegner möchtest du angreifen?$`{ANSI_RESET}`")
+        println()
+        println("--------------- HP Übersicht Gegner ---------------")
         hpÜbersichtGegner(gegnerListe.toMutableList())
+        println()
+        println("Welchen Gegner möchtest du angreifen?")
         var resultGegner = ""
         for (i in gegnerListe.indices) {
             resultGegner += "$ANSI_ORANGE ${i + 1}. ${gegnerListe[i]} $`{ANSI_RESET}`"
@@ -93,7 +95,7 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
             }
         }
         println(resultGegner)
-        println("$ANSI_BRIGHT_BLUE Wählen Sie die entsprechende Nummer: $`{ANSI_RESET}`")
+        println("${ANSI_BRIGHT_BLUE}Wählen Sie die entsprechende Nummer: $`{ANSI_RESET}`")
 
 
         var choice = readln().toIntOrNull()
@@ -107,11 +109,15 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
     }
 
     open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
-        println("$ANSI_BRIGHT_BLUE Bitte wähle eine Aktion: $`{ANSI_RESET}`")
+        println("Bitte wähle eine Aktion:")
         println("$ANSI_ORANGE 1.    Standartangriff $`{ANSI_RESET}`")
-        println("$ANSI_ORANGE 2.    Verstärkter Angriff (Verfügbar: $mittlereAttackeVerfügbar) $`{ANSI_RESET}`")
-        println("$ANSI_ORANGE 3.    Spezialattacke (Verfügbar: $spezialAttackeVerfügbar) $`{ANSI_RESET}`")
-        println("$ANSI_BRIGHT_BLUE Welche Aktion möchtest du auswählen:$`{ANSI_RESET}`")
+        if (mittlereAttackeVerfügbar > 0) {
+            println("$ANSI_ORANGE 2.    Verstärkter Angriff (Verfügbar: $mittlereAttackeVerfügbar) $`{ANSI_RESET}`")
+        }
+
+            println("$ANSI_ORANGE 3.    Spezialattacke (Verfügbar: $spezialAttackeVerfügbar) $`{ANSI_RESET}`")
+
+        print("${ANSI_BRIGHT_BLUE}Welche Aktion möchtest du auswählen:  $`{ANSI_RESET}`")
     try {
         var choice = readln().toInt()
         when (choice){
@@ -119,23 +125,27 @@ open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean
                 kleineAttacke(gegnerList)
             }
             2 -> {
-                mittlereAttacke(gegnerList)
+                if (mittlereAttackeVerfügbar>0) {
+                    mittlereAttacke(gegnerList)
+                }else{
+                    println("${ANSI_ORANGE}Du hast keine Mittlere Attacke mehr verfügbar!$`{ANSI_RESET}`")
+                    Thread.sleep(1500)
+                    attackeWählen(gegnerList,heldenListe)
+                }
             }
             3 -> {
                 if (spezialAttackeVerfügbar> 0){
                     spezialAttacke(gegnerList)
                 }else{
                     println("${ANSI_ORANGE}Du hast keine Spezialangriffe mehr verfügbar!$`{ANSI_RESET}`")
+                    Thread.sleep(1500)
                     attackeWählen(gegnerList,heldenListe)
                 }
-            }
-            else -> {
+            }else -> {
                 println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
                 attackeWählen(gegnerList,heldenListe)
             }
-
         }
-
     }catch (e : Exception){
             println("$ANSI_DARK_RED Ups, $e ")
             println("Bitte prüfe deine Eingabe. $`{ANSI_RESET}`")

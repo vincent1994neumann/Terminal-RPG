@@ -10,7 +10,9 @@ import Gegner.Gegner
 import geringerFlächenSchaden
 import mittlererFlächenSchaden
 
-class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 5000.0) : Hero(name,hpHero) {
+
+    open var feuerBallCounter = 2
 
     fun hagelSchadenHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
         val geringerFlächenSchaden = geringerFlächenSchaden()
@@ -31,6 +33,9 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
     }
 
     fun feuerBallHero(gegnerListe: List<Gegner>) { //Muatbelist damit ich ggf später die Liste verändern kann, z.B. wenn ein Gegener eliminiert wurde
+        if (feuerBallCounter <= 0){
+            println("${ANSI_ORANGE}Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!$`{ANSI_RESET}`")
+        return}
         val mittlererFlächenSchaden = mittlererFlächenSchaden()
         println("  Der $ANSI_NEON_GREEN Magier $`{ANSI_RESET}` greift mit der Attacke Feuerball an.")
         for (gegner in gegnerListe) {
@@ -43,8 +48,10 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
                     println("  Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
+
         }
         println()
+        feuerBallCounter--
     }
     fun schutzZauberHero(heldenListe: MutableList<Hero>) {
         for (hero in heldenListe) {
@@ -59,9 +66,12 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
             //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
 
     override fun attackeWählen(gegnerListe: List<Gegner>, heldenListe: MutableList<Hero>) {
-        println("$ANSI_GREEN Bitte wähle eine Aktion: $`{ANSI_RESET}`")
+        println("Bitte wähle eine Aktion:")
         println("$ANSI_GREEN 1.   $ANSI_ORANGE Hagelschaden (Flächenschaden) $`{ANSI_RESET}`")
-        println("$ANSI_GREEN 2.   $ANSI_ORANGE Feuerball (Flächenschaden) $`{ANSI_RESET}`")
+
+        if (feuerBallCounter > 0){
+            println("$ANSI_GREEN 2.   $ANSI_ORANGE Feuerball (Flächenschaden) (Verfügbar: $feuerBallCounter) $`{ANSI_RESET}`")
+        }
         if (protectionCountdown == 0){
             println("$ANSI_GREEN 3.   $ANSI_ORANGE Schutzzauber (Schutz für 2 Runden/alle Helden )$`{ANSI_RESET}`")
         }
@@ -73,14 +83,20 @@ class Magier (name : String, hpHero: Double = 50.0) : Hero(name,hpHero) {
                     hagelSchadenHero(gegnerListe)
 
                 }
-                2 -> {
-                    feuerBallHero(gegnerListe)
 
-                }
+                2 -> {
+                    if (feuerBallCounter > 0) {
+                            feuerBallHero(gegnerListe)
+                        } else {
+                            println("${ANSI_ORANGE}Du hast keine Feuerball mehr verfügbar!$`{ANSI_RESET}`")
+                            Thread.sleep(1500)
+                            attackeWählen(gegnerListe, heldenListe)
+                        }
+                    }
                 3 -> {schutzZauberHero(heldenListe)
                 }
                 else -> {
-                    println("$ANSI_DARK_RED Ihre Eingabe war falsch. $`{ANSI_RESET}`")
+                    println("${ANSI_DARK_RED}Ihre Eingabe war falsch. $`{ANSI_RESET}`")
                 }
             }
         }catch (e : Exception){

@@ -1,5 +1,6 @@
 package Helden
 
+import ANSI_DARK_RED
 import ANSI_GREEN
 import `{ANSI_RESET}`
 import Gegner.Gegner
@@ -24,10 +25,10 @@ class Beutel (
                 gegner.fluchSchaden = 75
                 }
             fluchTrank--
-            println("$ANSI_GREEN Alle Gegner wurde für drei Runden verflucht und erleidet je Runde 75 HP Schaden.$`{ANSI_RESET}`")
+            println("${ANSI_GREEN}Alle Gegner wurde für drei Runden verflucht und erleidet je Runde 75 HP Schaden.$`{ANSI_RESET}`")
             println()
             }else  {
-                println("Kein Fluchtrank mehr verfügbar.")
+                println("${ANSI_DARK_RED}Kein Fluchtrank mehr verfügbar.$`{ANSI_RESET}`")
         }
         }
 

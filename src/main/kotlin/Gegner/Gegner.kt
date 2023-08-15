@@ -6,6 +6,8 @@ import geringerSchaden
 import mittlererSchaden
 
 open class Gegner (var name : String,var hpGegner: Double){
+
+
     var trollProtection : Boolean = false
     var fluchRunden: Int = 0
     var fluchSchaden :Int = 0

@@ -26,6 +26,10 @@ class Bogenschütze (name : String, hpHero: Double = 50.0) : Hero(name,hpHero){
 
     // Brennenderpfeil
     override fun mittlereAttacke(gegner: List<Gegner>) {
+        if (mittlereAttackeVerfügbar <=0) {
+            println("Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!")
+            return
+        }
         var mittlererSchaden = mittlererSchaden()
         var ziel = gegnerWählen(gegner)
         println("Der $name schießt einen brennenden Pfeil auf $ziel.")
@@ -39,9 +43,14 @@ class Bogenschütze (name : String, hpHero: Double = 50.0) : Hero(name,hpHero){
         if (ziel.hpGegner <= 0) {
             println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
+        println()
+        mittlereAttackeVerfügbar--
     }
 
     override fun spezialAttacke(gegner: List<Gegner>) {
+        if (spezialAttackeVerfügbar <= 0) {
+            println("Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!")
+            return}
         var kritischerSchaden = kritischerSchaden()
         var ziel = gegnerWählen(gegner)
         println("Der $name schießt einen Präzisonspfeil auf $ziel.")
@@ -55,6 +64,8 @@ class Bogenschütze (name : String, hpHero: Double = 50.0) : Hero(name,hpHero){
         if (ziel.hpGegner <= 0) {
             println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
+        spezialAttackeVerfügbar--
+        println()
     }
 
 
