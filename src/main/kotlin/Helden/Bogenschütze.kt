@@ -9,19 +9,32 @@ class Bogenschütze (name : String, hpHero: Double = 100.0) : Hero(name,hpHero){
     //Attacken des Bogenschützen
     //Pfeilangriff
     override fun kleineAttacke(gegner: List<Gegner>) {
+        // Schadenswert für kleine Attacke ermitteln
         var kleinerSchaden = geringerSchaden()
+
+        // Ein Ziel aus der Gegnerliste auswählen
         var ziel = gegnerWählen(gegner)
+
+        // Information über den Angriff anzeigen
         println("Der $name schießt einen Pfeil auf $ziel.")
+
+        // Überprüfen, ob das Ziel eine Trollschutzfunktion aktiviert hat
         if (ziel.trollProtection) {
+            // Wenn der Trollschutz aktiviert ist, wird der Angriff absorbiert
             println("Der Troll absorbiert deinen Angriff mit Magie.")
-        }else {
+        } else {
+            // Ansonsten wird Schaden am Ziel verursacht und der erzeugte Schaden wird angezeigt
             println("$name trifft $ziel und verursacht $kleinerSchaden Schaden.")
             ziel.hpGegner -= kleinerSchaden
         }
+
+        // Überprüfen, ob das Ziel nach dem Angriff keine HP mehr hat
         if (ziel.hpGegner <= 0) {
+            // Wenn das Ziel keine HP mehr hat, wird angezeigt, dass es eliminiert wurde
             println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.")
         }
     }
+
 
     // Brennenderpfeil
     override fun mittlereAttacke(gegner: List<Gegner>) {

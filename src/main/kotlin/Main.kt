@@ -34,115 +34,157 @@ fun main() {
 
 
     fun gegnerAngreifLogik(hero: Hero) {
+        // Zeigt die aktuellen HP-Werte von Gegnern und Helden
         hpÜbersicht(gegnerListe,heldenListe)
+
+        // Gibt eine Meldung aus, dass der Gegner am Zug ist
         println("${ANSI_BROWN}|--------------- Der Gegner ist dran --------------|$`{ANSI_RESET}`")
         println()
+
+        // Überprüft, ob der Held durch einen Schutzzauber geschützt ist
         if (hero.isProtected) {
+            // Gibt eine Meldung aus, dass der Held durch einen Schutzzauber geschützt ist
             println("${ANSI_ORANGE}Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
             println("Runden-Countdown Schutzzauber: ${hero.protectionCountdown} $`{ANSI_RESET}`")
             println()
         } else {
+            // Gibt eine Meldung aus, dass der Gegner angreift
             println("${ANSI_BROWN}Der Gegner holt zur Attacke aus!$`{ANSI_RESET}`")
 
+            // Wählt zufällig einen Gegner aus der Liste aus, der angreifen wird
             var angreifenderGegner = gegnerListe.random()
+
+            // Entscheidet basierend auf dem Typ des angreifenden Gegners, welche Angriffsmethode verwendet wird
             when (angreifenderGegner) {
-
-                is Troll -> gegner1.auswahlAttackeTroll(heldenListe)
-                is DunklerRitter -> gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
-                is Goblin -> gegner3.auswahlAttackeGoblin(heldenListe.random())
-
+                is Troll ->
+                    // Der Troll führt seine spezifische Angriffsfunktion aus
+                    gegner1.auswahlAttackeTroll(heldenListe)
+                is DunklerRitter ->
+                    // Der Dunkle Ritter greift einen zufällig ausgewählten Helden an
+                    gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
+                is Goblin ->
+                    // Der Goblin greift einen zufällig ausgewählten Helden an
+                    gegner3.auswahlAttackeGoblin(heldenListe.random())
             }
             println()
-
         }
     }
 
-    fun heroWählen(heldenList: MutableList<Hero>): Hero { //Danke Chat GPT - hier hat Chat GPT mir die Logik kreiert
+
+    fun heroWählen(heldenList: MutableList<Hero>): Hero {
+        // Gibt eine Aufforderung aus, welcher Held für den Angriff gewählt werden soll
         println("Mit welchem Helden wollen Sie angreifen?")
-        var result = ""
+
+        var result = "" // Variable, um die Helden und ihre Nummern zu speichern
+
+        // Durchläuft die Liste der Helden und erstellt eine Zeichenfolge mit den Namen und Nummern der Helden
         for (i in heldenList.indices) {
             result += "${ANSI_ORANGE} ${i + 1} - ${heldenList[i]} $`{ANSI_RESET}`"
+            // Fügt ein Semikolon hinzu, wenn es nicht der letzte Held in der Liste ist
             if (i != heldenList.size - 1) {
                 result += "; "
             }
         }
+
+        // Gibt die Liste der Helden mit ihren Nummern aus
         println(result)
         println("Wählen Sie die entsprechende Nummer:")
-        var choice = readln().toIntOrNull() // sollte kein Int eingegeben werden wird Null zurückgegeben
 
+        // Liest die Benutzereingabe; falls die Eingabe kein Integer ist, wird null zurückgegeben
+        var choice = readln().toIntOrNull()
+
+        // Überprüft, ob die gewählte Nummer gültig und in der Liste der Helden vorhanden ist
         if (choice != null && choice in 1..heldenList.size) {
-            return heldenList[choice - 1]
+            return heldenList[choice - 1] // Gibt den entsprechenden Helden basierend auf der Auswahl zurück
 
         } else {
+            // Gibt eine Nachricht aus, wenn die Auswahl ungültig ist, und ruft die Funktion erneut auf
             println("${ANSI_DARK_RED}Ungültige Auswahl!$`{ANSI_RESET}`")
-            return heroWählen(heldenList)
+            return heroWählen(heldenList) // Rekursiver Aufruf, um den Benutzer erneut auswählen zu lassen
         }
     }
 
+
     fun heroAngreifLogik() {
-        hpÜbersicht(gegnerListe, heldenListe)
-        Thread.sleep(1000)
+        hpÜbersicht(gegnerListe, heldenListe) // Zeigt den aktuellen Gesundheitszustand von Gegnern und Helden
+
+        Thread.sleep(1000) // Lässt das Programm für 1 Sekunde pausieren
+
         println("${ANSI_GREEN}|--------------- Angriff der Helden ---------------|$`{ANSI_RESET}`")
         println()
+
+// Beginnt eine Schleife, um den Benutzer zur Eingabe aufzufordern
         while (true) {
 
+            // Überprüft, ob noch Tränke im Beutel vorhanden sind
             if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
                 println("Möchten Sie den Beutel öffnen oder kämpfen?")
-            }else {
+            } else {
                 println("Ihr Beutel ist leer.")
                 println("Sie können nur noch Kämpfen.")
             }
-            println("${ANSI_ORANGE}-1- Kämpfen$`{ANSI_RESET}`")
+            println("${ANSI_ORANGE}-1- Kämpfen$`{ANSI_RESET}`") // Option zum Kämpfen
 
+            // Zeigt die Beutel-Option nur an, wenn noch Tränke im Beutel sind
             if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
                 println("${ANSI_ORANGE}-2- Beutel öffnen$`{ANSI_RESET}`")
             }
+
             println("Bitte wählen:")
-            var choice = readln().toIntOrNull()
+            var choice = readln().toIntOrNull() // Liest die Benutzerauswahl
+
+            // Handhabt die Benutzerauswahl
             when (choice) {
-                1 -> {
-                    val ausgewählterHeld = heroWählen(heldenListe)
+                1 -> { // Option zum Kämpfen
+                    val ausgewählterHeld = heroWählen(heldenListe) // Lässt den Benutzer einen Helden wählen
                     println()
                     println("Gewählter Held: $ausgewählterHeld")
                     println()
-                    ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
-                    hpÜbersichtGegner(gegnerListe)
+                    ausgewählterHeld.attackeWählen(
+                        gegnerListe,
+                        heldenListe
+                    ) // Lässt den Benutzer eine Attacke für den gewählten Helden wählen
+                    hpÜbersichtGegner(gegnerListe) // Zeigt die Gesundheit der Gegner nach dem Angriff
                     return
                 }
-                2 -> {
+
+                2 -> { // Option zum Öffnen des Beutels
                     if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
                         println("${ANSI_NEON_GREEN}Beutelinhalt:$`{ANSI_RESET}`")
                         println("${ANSI_ORANGE} -1- Heiltrank: $`{ANSI_RESET}` ${beutel.heiltränke}")
                         println("${ANSI_ORANGE} -2- Fluchtrank:$`{ANSI_RESET}` ${beutel.fluchTrank}")
-                        var auswahl = readln().toIntOrNull()
+                        var auswahl = readln().toIntOrNull() // Liest die Trank-Auswahl
                         when (auswahl) {
-                            1 -> {
+                            1 -> { // Heiltrank
                                 if (beutel.heiltränke < 1) {
                                     println("${ANSI_DARK_RED}Keine Heiltränke mehr verfügbar!$`{ANSI_RESET}`")
                                 } else {
-                                    beutel.aufrufHeiltrank(heldenListe)
+                                    beutel.aufrufHeiltrank(heldenListe) // Verwendet den Heiltrank
                                     beutel.heiltränke--
                                     println("$ANSI_NEON_GREEN|--------------- 50 % HP LevelUp---------------|$`{ANSI_RESET}`")
-                                    hpÜberischtHero(heldenListe)
+                                    hpÜberischtHero(heldenListe) // Zeigt die Gesundheit der Helden nach Verwendung des Heiltranks
                                     return
                                 }
                             }
-                            2 -> {
-                                beutel.aufrufFluchTrank(gegnerListe)
-                                beutel.fluchEffektAnwenden(gegnerListe)
-                                hpÜbersichtGegner(gegnerListe)
+
+                            2 -> { // Fluchtrank
+                                beutel.aufrufFluchTrank(gegnerListe) // Verflucht die Gegner
+                                beutel.fluchEffektAnwenden(gegnerListe) // Wendet den Flucheffekt auf die Gegner an
+                                hpÜbersichtGegner(gegnerListe) // Zeigt die Gesundheit der Gegner nach dem Fluch
                                 return
                             }
+
                             else -> {
-                                println("${ANSI_DARK_RED}Ungültige Auswahl!$`{ANSI_RESET}`")
+                                println("${ANSI_DARK_RED}Ungültige Auswahl!$`{ANSI_RESET}`") // Fehlermeldung für ungültige Trank-Auswahl
                             }
                         }
                     } else {
-                        println("${ANSI_DARK_RED}Dein Beutel ist leer!$`{ANSI_RESET}`")
+                        println("${ANSI_DARK_RED}Dein Beutel ist leer!$`{ANSI_RESET}`") // Fehlermeldung, wenn der Beutel leer ist
                     }
                 }
+
                 else -> {
-                    println("${ANSI_DARK_RED}Ungültige Auswahl!$`{ANSI_RESET}`")
+                    println("${ANSI_DARK_RED}Ungültige Auswahl!$`{ANSI_RESET}`") // Fehlermeldung für ungültige Hauptauswahl
                 }
             }
         }

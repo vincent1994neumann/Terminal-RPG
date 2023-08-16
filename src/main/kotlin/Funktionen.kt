@@ -5,33 +5,38 @@ import Helden.Hero
 const val ANSI_GREEN = "\u001B[32m"
 const val ANSI_DARK_RED = "\u001B[31m"
 
+// Berechnet einen zufälligen Schadenswert zwischen 50 und 150.
 fun geringerSchaden(): Int {
     return (50..150).random()
 }
 
+// Berechnet einen zufälligen Schadenswert zwischen 150 und 350.
 fun mittlererSchaden(): Int {
     return (150..350).random()
 }
 
+// Berechnet einen zufälligen Schadenswert zwischen 350 und 650.
 fun kritischerSchaden(): Int {
     return (350..650).random()
 }
 
+// Berechnet einen zufälligen Schadenswert für Flächenangriffe zwischen 80 und 160.
 fun geringerFlächenSchaden(): Int{
     return (80..160).random()
 }
 
+// Berechnet einen zufälligen Schadenswert für Flächenangriffe zwischen 161 und 300.
 fun mittlererFlächenSchaden(): Int{
     return (161..300).random()
 }
 
+// Zeigt die aktuellen HP (Lebenspunkte) der Gegner an und entfernt eliminierte Gegner aus der Liste.
 fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
     var eliminierteGegner: MutableList<Gegner> = mutableListOf()
     for (gegner in gegnerListe) {
         if (gegner.hpGegner <= 0) {
             eliminierteGegner.add(gegner)
-
-            println( "${gegner.name} wurde von Dir erfolgreich besiegt!")
+            println( " ${gegner.name} wurde von Dir erfolgreich besiegt!")
         } else {
             println("$ANSI_BROWN ${gegner.name} HP: ${gegner.hpGegner.toInt()} $`{ANSI_RESET}`")
         }
@@ -40,33 +45,34 @@ fun hpÜbersichtGegner(gegnerListe: MutableList<Gegner>) {
     gegnerListe.removeAll(eliminierteGegner)
 }
 
-
+// Zeigt die aktuellen HP (Lebenspunkte) der Helden an und entfernt eliminierte Helden aus der Liste.
 fun hpÜberischtHero(heldenListe: MutableList<Hero>) {
     var eliminierteHelden: MutableList<Hero> = mutableListOf()
     for (hero in heldenListe) {
         if (hero.hpHero <= 0) {
             eliminierteHelden.add(hero)
-            println("${hero.name} wurde eliminiert!")
+            println(" ${hero.name} wurde eliminiert!")
         } else {
             println("$ANSI_GREEN ${hero.name} HP: ${hero.hpHero.toInt()} $`{ANSI_RESET}`")
-
         }
     }
     println()
     heldenListe.removeAll(eliminierteHelden)
 }
-fun isProtected (heldenListe: MutableList<Hero>){
 
+// Aktualisiert den Schutzstatus der Helden basierend auf dem Countdown.
+fun isProtected (heldenListe: MutableList<Hero>){
     for (hero in heldenListe) {
-    if (hero.isProtected) {
-        hero.protectionCountdown--
-    }
+        if (hero.isProtected) {
+            hero.protectionCountdown--
+        }
         if (hero.protectionCountdown == 0) {
-        hero.isProtected = false
+            hero.isProtected = false
         }
     }
 }
 
+// Zeigt eine Gesamtübersicht der aktuellen HP (Lebenspunkte) von Gegnern und Helden.
 fun hpÜbersicht (gegnerListe: MutableList<Gegner>,heldenListe: MutableList<Hero>){
     println("${ANSI_ORANGE}|------------------ HP Übersicht -----------------|$`{ANSI_RESET}`")
     println()
@@ -75,7 +81,6 @@ fun hpÜbersicht (gegnerListe: MutableList<Gegner>,heldenListe: MutableList<Hero
     println("${ANSI_ORANGE}Übersicht Lebenspunkte$`{ANSI_RESET}` ${ANSI_NEON_GREEN}Helden $`{ANSI_RESET}`${ANSI_ORANGE}:$`{ANSI_RESET}`")
     hpÜberischtHero(heldenListe)
     println()
-
 }
 
 /*
