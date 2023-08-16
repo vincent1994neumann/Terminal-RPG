@@ -4,7 +4,7 @@ import geringerSchaden
 import mittlererSchaden
 import kritischerSchaden
 
-class Bogenschütze (name : String, hpHero: Double = 750.0) : Hero(name,hpHero){
+class Bogenschütze (name : String, hpHero: Double = 100.0) : Hero(name,hpHero){
 
     //Attacken des Bogenschützen
     //Pfeilangriff
@@ -12,7 +12,6 @@ class Bogenschütze (name : String, hpHero: Double = 750.0) : Hero(name,hpHero){
         var kleinerSchaden = geringerSchaden()
         var ziel = gegnerWählen(gegner)
         println("Der $name schießt einen Pfeil auf $ziel.")
-        Thread.sleep(500)
         if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
@@ -33,7 +32,6 @@ class Bogenschütze (name : String, hpHero: Double = 750.0) : Hero(name,hpHero){
         var mittlererSchaden = mittlererSchaden()
         var ziel = gegnerWählen(gegner)
         println("Der $name schießt einen brennenden Pfeil auf $ziel.")
-        Thread.sleep(500)
         if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
@@ -54,7 +52,6 @@ class Bogenschütze (name : String, hpHero: Double = 750.0) : Hero(name,hpHero){
         var kritischerSchaden = kritischerSchaden()
         var ziel = gegnerWählen(gegner)
         println("Der $name schießt einen Präzisonspfeil auf $ziel.")
-        Thread.sleep(500)
         if (ziel.trollProtection) {
             println("Der Troll absorbiert deinen Angriff mit Magie.")
         } else {

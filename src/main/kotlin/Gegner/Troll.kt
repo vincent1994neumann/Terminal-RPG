@@ -10,12 +10,11 @@ import kritischerSchaden
 import mittlererSchaden
 const val ANSI_BROWN = "\u001B[0;33m"
 
-class Troll (name: String, hpGegner: Double = 2000.0) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Double = 1000.0) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     fun keulenSchwung(heldenListe: MutableList<Hero>){
         var keulenSchadenGegner = geringerFlächenSchaden()
-        Thread.sleep(500)
         println("${this.name} ${ANSI_BROWN} setzt die Attacke -Keulen Schwung- ein und trifft ${ANSI_NEON_GREEN}alle Helden$`{ANSI_RESET}`${ANSI_BROWN} mit ${keulenSchadenGegner} Schaden.$`{ANSI_RESET}`")
             for (hero in heldenListe){
                 if (hero.isProtected){

@@ -9,7 +9,13 @@ class Beutel (
     var heiltränke : Int = 2,
     var fluchTrank: Int =1
 )
+
 {
+    fun beutelwählen (){
+
+    }
+
+
     fun aufrufHeiltrank (heldenListe: MutableList<Hero>){
         if (heiltränke > 0) {
                 for (hero in heldenListe){

@@ -2,7 +2,7 @@ package Gegner
 
 import Helden.Hero
 
-class Goblin (name: String, hpGegner: Double = 850.0) : Gegner(name,hpGegner) {
+class Goblin (name: String, hpGegner: Double = 600.0) : Gegner(name,hpGegner) {
 
     override fun kleineAttackeGegner(Hero: Hero) {
         super.kleineAttackeGegner(Hero)

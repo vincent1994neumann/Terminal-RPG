@@ -10,7 +10,7 @@ import Gegner.Gegner
 import geringerFlächenSchaden
 import mittlererFlächenSchaden
 
-class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 100.0) : Hero(name,hpHero) {
 
     open var feuerBallCounter = 2
 
@@ -56,27 +56,27 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
         for (hero in heldenListe) {
             hero.isProtected = true
             hero.protectionCountdown = 2 // Für zwei Runden geschützt, nicht vier.
-            println(" ${hero.name}'s Schutzzauber wurde aktiviert.")
+            println("${hero.name}'s Schutzzauber wurde aktiviert.")
         }
-        println("$ANSI_ORANGE  Runden-Countdown Schutzzauber: $protectionCountdown $`{ANSI_RESET}`")
+        println()
+        println("${ANSI_ORANGE}Runden-Countdown Schutzzauber: $protectionCountdown $`{ANSI_RESET}`")
+        println()
     }
-
-
-            //Muss den Boolean in der Hero Klasse auf true setzen für eine Runde.
 
     override fun attackeWählen(gegnerListe: List<Gegner>, heldenListe: MutableList<Hero>) {
         println("Bitte wähle eine Aktion:")
-        println("$ANSI_GREEN 1.   $ANSI_ORANGE Hagelschaden (Flächenschaden) $`{ANSI_RESET}`")
+        println("$ANSI_GREEN -1-   ${ANSI_ORANGE}Hagelschaden (Flächenschaden) $`{ANSI_RESET}`")
+        println("$ANSI_GREEN -2-   ${ANSI_ORANGE}Feuerball (Flächenschaden) (Verfügbar: $feuerBallCounter) $`{ANSI_RESET}`")
+        if (!isProtected) {
+            println("$ANSI_GREEN -3-   ${ANSI_ORANGE}Schutzzauber (Schutz für 2 Runden/alle Helden )$`{ANSI_RESET}`")
+        }else {
+            println("${ANSI_ORANGE} -3-$`{ANSI_RESET}`${ANSI_NEON_GREEN}   Der Schutzzauber ist bereits aktiviert!$`{ANSI_RESET}`")
+        }
 
-        if (feuerBallCounter > 0){
-            println("$ANSI_GREEN 2.   $ANSI_ORANGE Feuerball (Flächenschaden) (Verfügbar: $feuerBallCounter) $`{ANSI_RESET}`")
-        }
-        if (protectionCountdown == 0){
-            println("$ANSI_GREEN 3.   $ANSI_ORANGE Schutzzauber (Schutz für 2 Runden/alle Helden )$`{ANSI_RESET}`")
-        }
-        println("$ANSI_BRIGHT_BLUE Welche Attacke möchtest du auswählen:$`{ANSI_RESET}`")
-        try {
-            var choice = readln().toInt()
+        println("Welche Attacke möchtest du auswählen:")
+        var choice = readln().toIntOrNull()
+
+        if (choice != null && choice in 1..3) {
             when (choice){
                 1 -> {
                     hagelSchadenHero(gegnerListe)
@@ -88,21 +88,20 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
                             feuerBallHero(gegnerListe)
                         } else {
                             println("${ANSI_ORANGE}Du hast keine Feuerball mehr verfügbar!$`{ANSI_RESET}`")
-                            Thread.sleep(1500)
                             attackeWählen(gegnerListe, heldenListe)
                         }
                     }
-                3 -> {schutzZauberHero(heldenListe)
+                3 -> {
+                    if (isProtected){
+                        println("${ANSI_ORANGE}Der Schutzzauber ist bereits aktiviert!$`{ANSI_RESET}`")
+                    }else{
+                        schutzZauberHero(heldenListe)
+                    }
                 }
                 else -> {
                     println("${ANSI_DARK_RED}Ihre Eingabe war falsch. $`{ANSI_RESET}`")
                 }
             }
-        }catch (e : Exception){
-            println("$ANSI_DARK_RED Ups, $e ")
-            println(" Bitte prüfe deine Eingabe $`{ANSI_RESET}`.")
-            attackeWählen(gegnerListe,heldenListe)
         }
-
     }
 }
