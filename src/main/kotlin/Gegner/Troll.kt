@@ -2,6 +2,7 @@ package Gegner
 
 import ANSI_DARK_RED
 import ANSI_GREEN
+import ANSI_NEON_GREEN
 import `{ANSI_RESET}`
 import Helden.Hero
 import geringerFlächenSchaden
@@ -15,10 +16,10 @@ class Troll (name: String, hpGegner: Double = 2000.0) : Gegner(name,hpGegner){
     fun keulenSchwung(heldenListe: MutableList<Hero>){
         var keulenSchadenGegner = geringerFlächenSchaden()
         Thread.sleep(500)
-        println(" ${this.name} $ANSI_BROWN setzt die Attacke -Keulen Schwung- ein und trifft alle Helden mit ${geringerFlächenSchaden()} Schaden.$`{ANSI_RESET}`")
+        println(" ${this.name} ${ANSI_BROWN} setzt die Attacke -Keulen Schwung- ein und trifft ${ANSI_NEON_GREEN}alle Helden$`{ANSI_RESET}`${ANSI_BROWN} mit ${geringerFlächenSchaden()} Schaden.$`{ANSI_RESET}`")
             for (hero in heldenListe){
                 if (hero.isProtected){
-                    println("Die Attacke ist bei ${hero.name} Wirkungslos, da der Schutzzauber vom Magier wirkt.")
+                    println("Die Attacke ist bei ${hero.name} wirkungslos, da der Schutzzauber vom Magier wirkt.")
                     println("$ANSI_GREEN Der Angriff schlug fehl.$`{ANSI_RESET}`")
                     println()
                 }else {
@@ -52,7 +53,7 @@ for (hero in HeroMutableList){
         var eliminierteHelden : MutableList<Hero> = mutableListOf()
             if (heldenListe[auswahlHit].isProtected) {
             } else {
-                println("$ANSI_BROWN Der ${ANSI_DARK_RED}Troll$`{ANSI_RESET}` setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei ${heldenListe[auswahlHit].name}.")
+                println("$ANSI_BROWN Der ${ANSI_DARK_RED}Troll$`{ANSI_RESET}`${ANSI_BROWN} setzt die Attacke -Schlagen- ein und verursacht $mittlererSchaden Schaden bei$`{ANSI_RESET}` ${heldenListe[auswahlHit].name}.")
                 heldenListe[auswahlHit].hpHero -= mittlererSchaden
                 if (heldenListe[auswahlHit].hpHero <= 0) {
                     println("${heldenListe[auswahlHit].name} wurde eliminiert. $`{ANSI_RESET}`")

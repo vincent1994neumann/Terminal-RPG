@@ -27,16 +27,16 @@ init {
     open fun kleineAttacke (gegner: List<Gegner>){
         var kleinerSchaden = geringerSchaden()
         var ziel = gegnerWählen(gegner)
-        println(" Der $name greift mit Attacke -Schlagen- an.")
+        println("Der $name greift mit Attacke -Schlagen- an.")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println(" Der Troll absorbiert deinen Angriff mit Magie.")
+            println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
             println("$name trifft $ziel und fügt $kleinerSchaden Schaden zu.")
             ziel.hpGegner -= kleinerSchaden
         }
         if (ziel.hpGegner <= 0) {
-            println(" Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.$`{ANSI_RESET}`")
+            println("Der Gegner ${ziel.name} wurde durch den Angriff eliminiert.$`{ANSI_RESET}`")
         }
         println()
     }
@@ -48,16 +48,16 @@ init {
         }
         var mittlererSchaden = mittlererSchaden()
         var ziel = gegnerWählen(gegner)
-        println(" Der $name greift mit Attacke -Stechen- an.")
+        println("Der $name greift mit Attacke -Stechen- an.")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println(" Der Troll absorbiert deinen Angriff mit Magie.")
+            println("Der Troll absorbiert deinen Angriff mit Magie.")
         }else {
-            println(" $name trifft $ziel und verursacht $mittlererSchaden Schaden.")
+            println("$name trifft $ziel und verursacht $mittlererSchaden Schaden.")
             ziel.hpGegner-=mittlererSchaden
         }
         if (ziel.hpGegner <= 0) {
-            println("$ANSI_GREEN Der Gegner ${ziel.name} $ANSI_GREEN wurde durch den Angriff eliminiert.$`{ANSI_RESET}`")
+            println("${ANSI_GREEN}Der Gegner ${ziel.name} $ANSI_GREEN wurde durch den Angriff eliminiert.$`{ANSI_RESET}`")
         }
         mittlereAttackeVerfügbar--
         println()
@@ -72,9 +72,9 @@ init {
         println(" Der $name greift mit seiner -Spezialattacke- an. ")
         Thread.sleep(500)
         if (ziel.trollProtection) {
-            println(" Der Troll absorbiert deinen Angriff mit Magie. ")
+            println("Der Troll absorbiert deinen Angriff mit Magie. ")
         } else {
-            println(" Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
+            println("Der $name trifft den $ziel und verursacht $kritischerSchaden Schaden.")
             ziel.hpGegner -= kritischerSchaden
         }
         if (ziel.hpGegner <= 0) {
@@ -87,6 +87,7 @@ init {
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
         println()
         println("--------------- HP Übersicht Gegner ---------------")
+        println()
         hpÜbersichtGegner(gegnerListe.toMutableList())
         println()
         println("Welchen Gegner möchtest du angreifen?")

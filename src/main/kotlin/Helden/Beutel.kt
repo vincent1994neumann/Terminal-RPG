@@ -30,7 +30,7 @@ class Beutel (
             }else  {
                 println("${ANSI_DARK_RED}Kein Fluchtrank mehr verfügbar.$`{ANSI_RESET}`")
         }
-        }
+    }
 
     fun fluchEffektAnwenden(gegnerListe: MutableList<Gegner>) {
         for (gegner in gegnerListe) {
