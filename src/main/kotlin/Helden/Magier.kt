@@ -48,7 +48,6 @@ class Magier (name : String, hpHero: Double = 1000.0) : Hero(name,hpHero) {
                     println("Der Gegner ${gegner.name} wurde durch den Angriff eliminiert.")
                 }
             }
-
         }
         println()
         feuerBallCounter--

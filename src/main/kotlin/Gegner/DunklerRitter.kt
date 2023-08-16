@@ -14,8 +14,8 @@ class DunklerRitter (name: String, hpGegner: Double = 1500.0) : Gegner(name,hpGe
     fun auswahlAttackeDunklerRitter (Hero: Hero) {
         var randomNumber = (1..100).random()
         when (randomNumber) {
-            in 1..65 -> kleineAttackeGegner(Hero)
-            in 66..100 -> mittlereAttackeGegner(Hero)
+            in 1..55 -> kleineAttackeGegner(Hero)
+            in 56..100 -> mittlereAttackeGegner(Hero)
         }
     }
 

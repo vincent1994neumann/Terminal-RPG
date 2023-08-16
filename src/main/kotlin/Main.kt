@@ -32,10 +32,10 @@ fun main() {
 
     fun gegnerAngreifLogik(hero: Hero) {
         if (hero.isProtected) {
-            println("$ANSI_ORANGE Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
-            println(" Runden-Countdown Schutzzauber: ${hero.protectionCountdown} $`{ANSI_RESET}`")
+            println("${ANSI_ORANGE}Durch den Schutzzauber würde jeder Angriff ins Leere gehen.")
+            println("Runden-Countdown Schutzzauber: ${hero.protectionCountdown} $`{ANSI_RESET}`")
         } else {
-            println("$ANSI_BROWN Der Gegner holt zur Attacke aus!$`{ANSI_RESET}`")
+            println("${ANSI_BROWN}Der Gegner holt zur Attacke aus!$`{ANSI_RESET}`")
             Thread.sleep(500)
             var angreifenderGegner = gegnerListe.random()
             when (angreifenderGegner) {
@@ -53,13 +53,12 @@ fun main() {
         println("Mit welchem Helden wollen Sie angreifen?")
         var result = ""
         for (i in heldenList.indices) {
-            result += "$ANSI_ORANGE ${i + 1}. ${heldenList[i]} $`{ANSI_RESET}`"
+            result += "${ANSI_ORANGE} ${i + 1}. ${heldenList[i]} $`{ANSI_RESET}`"
             if (i != heldenList.size - 1) {
                 result += "; "
             }
         }
         println(result)
-
         print("${ANSI_BRIGHT_BLUE}Wählen Sie die entsprechende Nummer:  $`{ANSI_RESET}`")
         var choice = readln().toIntOrNull() // sollte kein Int eingegeben werden wird Null zurückgegeben
 
@@ -216,14 +215,14 @@ fun main() {
             Thread.sleep(1000)
             println("${ANSI_RED}|------------------- RUNDE $counter --------------------|$`{ANSI_RESET}`")
             println()
-            hpÜbersicht(gegnerListe,heldenListe)
             beutel.fluchEffektAnwenden(gegnerListe)
+            hpÜbersicht(gegnerListe,heldenListe)
             isProtected(heldenListe)
             Thread.sleep(1000)
 
             // Der Gegner greift zuerst an
             if (gegnerListe.isNotEmpty()) {
-                println("${ANSI_BROWN}|-------------- Der Gegner ist dran -------------|$`{ANSI_RESET}`")
+                println("${ANSI_BROWN}|------------- Der Gegner ist dran -----------|$`{ANSI_RESET}`")
                 println()
                 Thread.sleep(1000)
                 gegnerAngreifLogik(held1)
@@ -239,7 +238,7 @@ fun main() {
                 }
             }
 
-            println("${ANSI_GREEN}|--------------- Du bist dran ---------------|$`{ANSI_RESET}`")
+            println("${ANSI_GREEN}|---------------- Du bist dran ----------------|$`{ANSI_RESET}`")
             Thread.sleep(1000)
             println()
             heroAngreifLogik()
@@ -362,11 +361,11 @@ ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}LET'S GO$`{ANSI_RESET}`${ANSI
     //-------------------------------------------------------------------------
 
 
-werStartet()
+//werStartet()
+//spielrundeGegnerStart()
+//startscreen()
+//spielrundenUserStart()
 spielrundeGegnerStart()
-startscreen()
-spielrundenUserStart()
-
 
 
 

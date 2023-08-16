@@ -72,9 +72,9 @@ fun isProtected (heldenListe: MutableList<Hero>){
 fun hpÜbersicht (gegnerListe: MutableList<Gegner>,heldenListe: MutableList<Hero>){
     println("${ANSI_ORANGE}----------------- HP Übersicht -----------------$`{ANSI_RESET}`")
     println()
-    println("Übersicht Lebenspunkte ${ANSI_DARK_RED}Gegner $`{ANSI_RESET}`:")
+    println("${ANSI_ORANGE}Übersicht Lebenspunkte$`{ANSI_RESET}` ${ANSI_DARK_RED}Gegner $`{ANSI_RESET}`${ANSI_ORANGE}:$`{ANSI_RESET}`")
     hpÜbersichtGegner(gegnerListe)
-    println("Übersicht Lebenspunkte ${ANSI_NEON_GREEN}Helden $`{ANSI_RESET}`:")
+    println("${ANSI_ORANGE}Übersicht Lebenspunkte$`{ANSI_RESET}` ${ANSI_NEON_GREEN}Helden $`{ANSI_RESET}`${ANSI_ORANGE}:$`{ANSI_RESET}`")
     hpÜberischtHero(heldenListe)
     println()
     Thread.sleep(1000)

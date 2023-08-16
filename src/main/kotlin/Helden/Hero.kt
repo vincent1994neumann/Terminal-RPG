@@ -86,7 +86,7 @@ init {
 
     fun gegnerWählen (gegnerListe: List<Gegner>) : Gegner {
         println()
-        println("--------------- HP Übersicht Gegner ---------------")
+        println("|--------------- HP Übersicht Gegner ---------------|")
         println()
         hpÜbersichtGegner(gegnerListe.toMutableList())
         println()

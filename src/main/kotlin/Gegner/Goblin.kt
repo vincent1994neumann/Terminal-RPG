@@ -16,8 +16,8 @@ class Goblin (name: String, hpGegner: Double = 850.0) : Gegner(name,hpGegner) {
     fun auswahlAttackeGoblin (Hero: Hero) {
         var randomNumber = (1..100).random()
         when (randomNumber) {
-            in 1..65 -> kleineAttackeGegner(Hero)
-            in 66..100 -> mittlereAttackeGegner(Hero)
+            in 1..50 -> kleineAttackeGegner(Hero)
+            in 50..100 -> mittlereAttackeGegner(Hero)
         }
     }
 }
