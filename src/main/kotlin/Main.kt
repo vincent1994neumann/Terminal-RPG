@@ -39,9 +39,10 @@ fun main() {
             Thread.sleep(500)
             var angreifenderGegner = gegnerListe.random()
             when (angreifenderGegner) {
-                gegner1 -> gegner1.auswahlAttackeTroll(heldenListe)
-                gegner2 -> gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
-                gegner3 -> gegner3.auswahlAttackeGoblin(heldenListe.random())
+
+                is Troll -> gegner1.auswahlAttackeTroll(heldenListe)
+                is DunklerRitter -> gegner2.auswahlAttackeDunklerRitter(heldenListe.random())
+                is Goblin -> gegner3.auswahlAttackeGoblin(heldenListe.random())
 
             }
             println()
@@ -74,221 +75,281 @@ fun main() {
 
 
     fun heroAngreifLogik() {
-        hpÜbersicht(gegnerListe,heldenListe)
-        println("${ANSI_GREEN}--------------- Angriff der Helden ---------------$`{ANSI_RESET}`")
+        hpÜbersicht(gegnerListe, heldenListe)
+        println("${ANSI_GREEN}|--------------- Angriff der Helden ---------------|$`{ANSI_RESET}`")
         println()
         Thread.sleep(1000)
-        println("Möchten Sie den Beutel öffnen oder kämpfen?")
+        if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
+            println("Möchten Sie den Beutel öffnen oder kämpfen?")
+        }else {
+            println("Ihr Beutel ist leer.")
+            println("Sie können nur noch Kämpfen.")
+        }
         println("${ANSI_ORANGE}1. Kämpfen$`{ANSI_RESET}`")
-        println("${ANSI_ORANGE}2. Beutel öffnen$`{ANSI_RESET}`")
-        println()
-        print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
+
+        if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
+            println("${ANSI_ORANGE}2. Beutel öffnen$`{ANSI_RESET}`")
+            println()
+        }
+        if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
+            print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
+        }
         //GGF noch mal abfangen prüfen
-        try {
-            when (readln().toIntOrNull()) {
-                1 -> {
-                    println()
-                    var ausgewählterHeld = heroWählen(heldenListe)
-                    println()
-                    println("Gewählter Held: ${ausgewählterHeld}")
-                    println()
-                    ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
-                    println()
-                    hpÜbersichtGegner(gegnerListe)
-                }
+        if (beutel.heiltränke > 0 || beutel.fluchTrank > 0) {
 
-                2 -> {
-                    println()
-                    println("${ANSI_ORANGE} Beutelinhalt:$`{ANSI_RESET}`")
 
-                    println("${ANSI_ORANGE} 1. Heiltrank: $`{ANSI_RESET}` ${beutel.heiltränke}")
-                    println("${ANSI_ORANGE} 2. Fluchtrank:$`{ANSI_RESET}` ${beutel.fluchTrank}")
-                    println()
-                    print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
-                    var choice = readln().toInt()
-                    when (choice) {
-                        1 -> {
-                            if (beutel.heiltränke < 1) {
-                                println("${ANSI_DARK_RED}Keine Heiltränke mehr verfügbar!$`{ANSI_RESET}`")
-                            } else {
-                                beutel.aufrufHeiltrank(heldenListe)
-                                beutel.heiltränke--
-                                println("$ANSI_NEON_GREEN--------------- 50 % HP LevelUp---------------$`{ANSI_RESET}`")
-                                hpÜberischtHero(heldenListe)
+                when (readln().toIntOrNull()) {
+                    1 -> {
+                        println()
+                        var ausgewählterHeld = heroWählen(heldenListe)
+                        println()
+                        println("Gewählter Held: ${ausgewählterHeld}")
+                        println()
+                        ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
+                        println()
+                        hpÜbersichtGegner(gegnerListe)
+                    }
+
+                    2 -> {
+                        println()
+                        println("${ANSI_ORANGE}Beutelinhalt:$`{ANSI_RESET}`")
+
+                        println("${ANSI_ORANGE} 1. Heiltrank: $`{ANSI_RESET}` ${beutel.heiltränke}")
+                        println("${ANSI_ORANGE} 2. Fluchtrank:$`{ANSI_RESET}` ${beutel.fluchTrank}")
+                        println()
+                        print("${ANSI_BRIGHT_BLUE}Bitte wählen Sie: $`{ANSI_RESET}`")
+
+                        var choice = readln().toIntOrNull()
+
+                        when (choice) {
+                            1 -> {
+                                if (beutel.heiltränke < 1) {
+                                    println("${ANSI_DARK_RED}Keine Heiltränke mehr verfügbar!$`{ANSI_RESET}`")
+                                } else {
+                                    beutel.aufrufHeiltrank(heldenListe)
+                                    beutel.heiltränke--
+                                    println("$ANSI_NEON_GREEN|--------------- 50 % HP LevelUp---------------|$`{ANSI_RESET}`")
+                                    hpÜberischtHero(heldenListe)
+                                }
                             }
-                        }
 
-                        2 -> {
-                            beutel.aufrufFluchTrank(gegnerListe)
-                            beutel.fluchEffektAnwenden(gegnerListe)
-                            hpÜbersichtGegner(gegnerListe)
+                            2 -> {
+                                beutel.aufrufFluchTrank(gegnerListe)
+                                beutel.fluchEffektAnwenden(gegnerListe)
+                                hpÜbersichtGegner(gegnerListe)
 
+                            }
+                            else -> {
+                                println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
+                                when (choice) {
+                                    1 -> {
+                                        if (beutel.heiltränke < 1) {
+                                            println("${ANSI_DARK_RED}Keine Heiltränke mehr verfügbar!$`{ANSI_RESET}`")
+                                        } else {
+                                            beutel.aufrufHeiltrank(heldenListe)
+                                            beutel.heiltränke--
+                                            println("$ANSI_NEON_GREEN|--------------- 50 % HP LevelUp---------------|$`{ANSI_RESET}`")
+                                            hpÜberischtHero(heldenListe)
+                                        }
+                                    }
+
+                                    2 -> {
+                                        beutel.aufrufFluchTrank(gegnerListe)
+                                        beutel.fluchEffektAnwenden(gegnerListe)
+                                        hpÜbersichtGegner(gegnerListe)
+
+                                    }
+                                    else -> {
+                                        println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
+
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+
+        } else {
+            try {
+                when (1) {
+                    1 -> {
+                        println()
+                        var ausgewählterHeld = heroWählen(heldenListe)
+                        println()
+                        println("Gewählter Held: ${ausgewählterHeld}")
+                        println()
+                        ausgewählterHeld.attackeWählen(gegnerListe, heldenListe)
+                        println()
+                        hpÜbersichtGegner(gegnerListe)
+                    }
+                }
+            } catch (e: Exception) {
+                println("$ANSI_DARK_RED Ups, $e ")
+                println("Bitte prüfe deine Eingabe. $`{ANSI_RESET}`")
             }
-        }catch (e : Exception){
-            println("$ANSI_DARK_RED Ups, $e ")
-            println("Bitte prüfe deine Eingabe. $`{ANSI_RESET}`")
         }
     }
 
 
 
-    fun spielrundenUserStart(){
-        var counter = 1
-        var gameOver = false
 
-        while (!gameOver) {
-            println()
-            Thread.sleep(1000)
-            println("${ANSI_RED}------------------- RUNDE $counter --------------------$`{ANSI_RESET}`")
-            println()
-            beutel.fluchEffektAnwenden(gegnerListe)
-            isProtected(heldenListe)
-            Thread.sleep(1000)
-            heroAngreifLogik()
-            Thread.sleep(1000)
-            // Prüfe, ob alle Helden besiegt wurden
-            if (heldenListe.isEmpty()) {
-                println("${ANSI_DARK_RED}Alle Helden wurden besiegt! $`{ANSI_RESET}`")
-                println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
-                println()
-                gameOver = true
-                continue
-            }
+            fun spielrundenUserStart() {
+                var counter = 1
 
-            if (counter == 3){
-                var gegner4 = Goblin("${ANSI_DARK_RED}Goblin's Bruder$`{ANSI_RESET}`", 600.0)
-                gegnerListe.add(gegner4)
-                println()
-            }
-
-            if (counter == 6){
-                var gegner5 = Goblin("${ANSI_DARK_RED}Goblin's Schwester$`{ANSI_RESET}`", 500.0)
-                gegnerListe.add(gegner5)
-                println()
-            }
-
-            // Wenn es noch Gegner gibt, lass sie angreifen
-            if (gegnerListe.isNotEmpty()) {
-                println("${ANSI_BROWN}--------------- Der Gegner ist dran ---------------$`{ANSI_RESET}`")
-                println()
-                Thread.sleep(1000)
-                gegnerAngreifLogik(held1)
-                hpÜberischtHero(heldenListe)
-
-                // Prüfe erneut, ob alle Helden nach dem Angriff der Gegner besiegt wurden
-                if (heldenListe.isEmpty()) {
-                    println("${ANSI_DARK_RED}Alle Helden wurden nach dem Angriff der Gegner besiegt!$`{ANSI_RESET}`")
-                    println("${ANSI_DARK_RED} Sie haben VERLOREN!!!$`{ANSI_RESET}`")
+                while (true) {
                     println()
-                    gameOver = true
-                    break
+                    Thread.sleep(1000)
+                    println("${ANSI_RED}------------------- RUNDE $counter --------------------$`{ANSI_RESET}`")
+                    println()
+                    beutel.fluchEffektAnwenden(gegnerListe)
+                    isProtected(heldenListe)
+                    Thread.sleep(1000)
+                    heroAngreifLogik()
+                    Thread.sleep(1000)
+                    // Prüfe, ob alle Helden besiegt wurden
+                    if (heldenListe.isEmpty()) {
+                        println("${ANSI_DARK_RED}Alle Helden wurden besiegt! $`{ANSI_RESET}`")
+                        println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
+                        println()
+                        break
+                    }
+
+                    if (counter == 3) {
+                        var gegner4 = Goblin("${ANSI_DARK_RED}Goblin's Bruder$`{ANSI_RESET}`", 600.0)
+                        gegnerListe.add(gegner4)
+                        println("Ein wilder ${gegner4.name} wurde beschworen.")
+                        println()
+                    }
+
+                    if (counter == 6) {
+                        var gegner5 = Goblin("${ANSI_DARK_RED}Goblin's Schwester$`{ANSI_RESET}`", 500.0)
+                        gegnerListe.add(gegner5)
+                        println( println("Ein wilder ${gegner5.name} wurde beschworen."))
+                        println()
+                    }
+
+                    // Wenn es noch Gegner gibt, lass sie angreifen
+                    if (gegnerListe.isNotEmpty()) {
+                        println("${ANSI_BROWN}|--------------- Der Gegner ist dran ---------------|$`{ANSI_RESET}`")
+                        println()
+                        Thread.sleep(1000)
+                        gegnerAngreifLogik(held1)
+                        hpÜberischtHero(heldenListe)
+
+                        // Prüfe erneut, ob alle Helden nach dem Angriff der Gegner besiegt wurden
+                        if (heldenListe.isEmpty()) {
+                            println("${ANSI_DARK_RED}Alle Helden wurden nach dem Angriff der Gegner besiegt!$`{ANSI_RESET}`")
+                            println("${ANSI_DARK_RED} Sie haben VERLOREN!!!$`{ANSI_RESET}`")
+                            println()
+
+                            break
+                        }
+
+                        println("${ANSI_BROWN}Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}` $ANSI_BROWN ist vorbei. Es gibt noch keinen Gewinner.$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        counter++
+                        println("${ANSI_BROWN}Mach dich bereit für Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}`!")
+                        println()
+                    } else {
+                        println("${ANSI_NEON_GREEN}Es wurden alle Gegner erfolgreich eliminiert!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        println("${ANSI_NEON_GREEN}Sie haben GEWONNEN!!!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        break
+                    }
+                }
+                println("${ANSI_ORANGE}Das Spiel ist vorbei! Vielen Dank fürs spielen.$`{ANSI_RESET}`")
+                println("${ANSI_NEON_GREEN}gespielte Runden: $counter $`{ANSI_RESET}`")
+
+            }
+
+
+            fun spielrundeGegnerStart() {
+                var counter = 1
+                var gameOver = false
+
+                while (!gameOver) {
+                    println()
+                    Thread.sleep(1000)
+                    println("${ANSI_RED}|------------------- RUNDE $counter --------------------|$`{ANSI_RESET}`")
+                    println()
+                    beutel.fluchEffektAnwenden(gegnerListe)
+                    hpÜbersicht(gegnerListe, heldenListe)
+                    isProtected(heldenListe)
+                    Thread.sleep(1000)
+
+                    // Der Gegner greift zuerst an
+                    if (gegnerListe.isNotEmpty()) {
+                        println("${ANSI_BROWN}|------------- Der Gegner ist dran -----------|$`{ANSI_RESET}`")
+                        println()
+                        Thread.sleep(1000)
+                        gegnerAngreifLogik(held1)
+                        hpÜberischtHero(heldenListe)
+
+                        // Prüfe, ob alle Helden nach dem Angriff der Gegner besiegt wurden
+                        if (heldenListe.isEmpty()) {
+                            println("${ANSI_DARK_RED}Alle Helden wurden nach dem Angriff der Gegner besiegt!$`{ANSI_RESET}`")
+                            println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
+                            println()
+                            gameOver = true
+                            continue
+                        }
+                    }
+
+                    println("${ANSI_GREEN}|---------------- Du bist dran ------------------|$`{ANSI_RESET}`")
+                    Thread.sleep(1000)
+                    println()
+                    heroAngreifLogik()
+                    Thread.sleep(1000)
+
+                    // Prüfe, ob alle Helden besiegt wurden
+                    if (heldenListe.isEmpty()) {
+                        println("${ANSI_DARK_RED}Alle Helden wurden besiegt! $`{ANSI_RESET}`")
+                        println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
+                        println()
+                        gameOver = true
+                        continue
+                    }
+
+                    if (counter == 3) {
+                        val gegner4 = Goblin("${ANSI_DARK_RED}Goblin's Bruder$`{ANSI_RESET}`", 600.0)
+                        gegnerListe.add(gegner4)
+                        println("Ein wilder ${gegner4.name} wurde beschworen.")
+                        println()
+                    }
+
+                    if (counter == 6) {
+                        val gegner5 = Goblin("${ANSI_DARK_RED}Goblin's Schwester$`{ANSI_RESET}`", 500.0)
+                        gegnerListe.add(gegner5)
+                        println("Ein wilder ${gegner5.name} wurde beschworen.")
+                        println()
+                    }
+
+                    if (gegnerListe.isEmpty()) {
+                        println("${ANSI_NEON_GREEN}Es wurden alle Gegner erfolgreich eliminiert!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        println("${ANSI_NEON_GREEN}Sie haben GEWONNEN!!!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        gameOver = true
+                    } else {
+                        println("${ANSI_BROWN}Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}` $ANSI_BROWN ist vorbei. Es gibt noch keinen Gewinner.$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                    }
+
+                    counter++
+                    println("${ANSI_BROWN}Mach dich bereit für Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}`!")
+                    println()
                 }
 
-                println("${ANSI_BROWN}Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}` $ANSI_BROWN ist vorbei. Es gibt noch keinen Gewinner.$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-                counter++
-                println("${ANSI_BROWN}Mach dich bereit für Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}`!")
+                println("${ANSI_ORANGE}Das Spiel ist vorbei! Vielen Dank fürs spielen.$`{ANSI_RESET}`")
+                println("${ANSI_NEON_GREEN}gespielte Runden: $counter $`{ANSI_RESET}`")
+            }
+
+            fun startscreen() {
                 println()
-            } else {
-                println("${ANSI_NEON_GREEN}Es wurden alle Gegner erfolgreich eliminiert!$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-                println("${ANSI_NEON_GREEN}Sie haben GEWONNEN!!!$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-                gameOver = true
-            }
-        }
-        println("${ANSI_ORANGE}Das Spiel ist vorbei! Vielen Dank fürs spielen.$`{ANSI_RESET}`")
-        println("${ANSI_NEON_GREEN}gespielte Runden: $counter $`{ANSI_RESET}`")
-
-    }
-
-
-    fun spielrundeGegnerStart() {
-        var counter = 1
-        var gameOver = false
-
-        while (!gameOver) {
-            println()
-            Thread.sleep(1000)
-            println("${ANSI_RED}|------------------- RUNDE $counter --------------------|$`{ANSI_RESET}`")
-            println()
-            beutel.fluchEffektAnwenden(gegnerListe)
-            hpÜbersicht(gegnerListe,heldenListe)
-            isProtected(heldenListe)
-            Thread.sleep(1000)
-
-            // Der Gegner greift zuerst an
-            if (gegnerListe.isNotEmpty()) {
-                println("${ANSI_BROWN}|------------- Der Gegner ist dran -----------|$`{ANSI_RESET}`")
                 println()
-                Thread.sleep(1000)
-                gegnerAngreifLogik(held1)
-                hpÜberischtHero(heldenListe)
-
-                // Prüfe, ob alle Helden nach dem Angriff der Gegner besiegt wurden
-                if (heldenListe.isEmpty()) {
-                    println("${ANSI_DARK_RED}Alle Helden wurden nach dem Angriff der Gegner besiegt!$`{ANSI_RESET}`")
-                    println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
-                    println()
-                    gameOver = true
-                    continue
-                }
-            }
-
-            println("${ANSI_GREEN}|---------------- Du bist dran ----------------|$`{ANSI_RESET}`")
-            Thread.sleep(1000)
-            println()
-            heroAngreifLogik()
-            Thread.sleep(1000)
-
-            // Prüfe, ob alle Helden besiegt wurden
-            if (heldenListe.isEmpty()) {
-                println("${ANSI_DARK_RED}Alle Helden wurden besiegt! $`{ANSI_RESET}`")
-                println("${ANSI_DARK_RED} Sie haben VERLOREN!!! $`{ANSI_RESET}`")
-                println()
-                gameOver = true
-                continue
-            }
-
-            if (counter == 3) {
-                val gegner4 = Goblin("${ANSI_DARK_RED}Goblin's Bruder$`{ANSI_RESET}`", 600.0)
-                gegnerListe.add(gegner4)
-                println()
-            }
-
-            if (counter == 6) {
-                val gegner5 = Goblin("${ANSI_DARK_RED}Goblin's Schwester$`{ANSI_RESET}`", 500.0)
-                gegnerListe.add(gegner5)
-                println()
-            }
-
-            if (gegnerListe.isEmpty()) {
-                println("${ANSI_NEON_GREEN}Es wurden alle Gegner erfolgreich eliminiert!$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-                println("${ANSI_NEON_GREEN}Sie haben GEWONNEN!!!$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-                gameOver = true
-            } else {
-                println("${ANSI_BROWN}Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}` $ANSI_BROWN ist vorbei. Es gibt noch keinen Gewinner.$`{ANSI_RESET}`")
-                Thread.sleep(1500)
-            }
-
-            counter++
-            println("${ANSI_BROWN}Mach dich bereit für Runde $`{ANSI_RESET}` $ANSI_DARK_RED $counter $`{ANSI_RESET}`!")
-            println()
-        }
-
-        println("${ANSI_ORANGE}Das Spiel ist vorbei! Vielen Dank fürs spielen.$`{ANSI_RESET}`")
-        println("${ANSI_NEON_GREEN}gespielte Runden: $counter $`{ANSI_RESET}`")
-    }
-
-        fun startscreen(){
-        println()
-        println()
-        println("""
+                println(
+                    """
        T${ANSI_BRIGHT_BLUE}~$`{ANSI_RESET}`${ANSI_YELLOW}~$`{ANSI_RESET}`                      
        |                    ${ANSI_NEON_GREEN}Willkommen bei$`{ANSI_RESET}`
        |                ${ANSI_NEON_GREEN}ClashRoyalFürAnfänger$`{ANSI_RESET}`
@@ -302,72 +363,73 @@ fun main() {
   |  |     T~T~T   +----T----+   +----T----+    
   |  |     | | |   |         |   |         |  
 ~~T~T~~T~T~~T~T~~  +---------+   +---------+     
-    """)
-    Thread.sleep(5000)
-    println("${ANSI_ORANGE}In \"ClashRoyalFürAnfänger\" kämpfen deine Helden in Runden gegen ansteigende Gegnerhorden.")
-    println("Nutze spezielle Fähigkeiten, um schnell zu siegen.")
-    println("Ziel ist es, die Gegner in möglichst wenigen Runden zu besiegen.")
-    println("Das Spiel endet, wenn eine Seite komplett besiegt ist.")
-    Thread.sleep(8500)
-        println()
-    println("Kannst du bis zum Ende bestehen?$`{ANSI_RESET}`")
-        Thread.sleep(3000)
+    """
+                )
+                Thread.sleep(5000)
+                println("${ANSI_ORANGE}In \"ClashRoyalFürAnfänger\" kämpfen deine Helden in Runden gegen ansteigende Gegnerhorden.")
+                println("Nutze spezielle Fähigkeiten, um schnell zu siegen.")
+                println("Ziel ist es, die Gegner in möglichst wenigen Runden zu besiegen.")
+                println("Das Spiel endet, wenn eine Seite komplett besiegt ist.")
+                Thread.sleep(8500)
+                println()
+                println("Kannst du bis zum Ende bestehen?$`{ANSI_RESET}`")
+                Thread.sleep(3000)
 
-print("""
+                print(
+                    """
                                                            
 ${ANSI_GREEN}|__________________ ${ANSI_NEON_GREEN}LET'S GO$`{ANSI_RESET}`${ANSI_GREEN} __________________|$`{ANSI_RESET}`         
                         
-      """)
-        Thread.sleep(1000)
+      """
+                )
+                Thread.sleep(1000)
 
 
+            }
 
-    }
+            fun werStartet() {
+                println()
+                println("${ANSI_YELLOW}|--------------- Kopf Oder Zahl ---------------|")
 
-    fun werStartet(){
-        println()
-        println("${ANSI_YELLOW}|--------------- Kopf Oder Zahl ---------------|")
-
-        println()
-        println("Wer darf als erstes Angreifen?")
-        println("Gewinne das Kopf oder Zahl Spiel, um die erste Attacke auszuführen.$`{ANSI_RESET}`")
+                println()
+                println("Wer darf als erstes Angreifen?")
+                println("Gewinne das Kopf oder Zahl Spiel, um die erste Attacke auszuführen.$`{ANSI_RESET}`")
 
 
-        print("${ANSI_BRIGHT_BLUE}Wähle Kopf ${ANSI_ORANGE}(k)$`{ANSI_RESET}`${ANSI_BRIGHT_BLUE} oder Zahl $`{ANSI_RESET}`${ANSI_ORANGE}(z)$`{ANSI_RESET}`:$`{ANSI_RESET}`")
-        var userEingabe : String
-        try {
-        userEingabe = readln()
-        if (userEingabe.lowercase() != "k" && userEingabe.lowercase() != "z"){
-            throw IllegalArgumentException("Ungültige Eingabe")
-        }
+                print("${ANSI_BRIGHT_BLUE}Wähle Kopf ${ANSI_ORANGE}(k)$`{ANSI_RESET}`${ANSI_BRIGHT_BLUE} oder Zahl $`{ANSI_RESET}`${ANSI_ORANGE}(z)$`{ANSI_RESET}`:$`{ANSI_RESET}`")
+                var userEingabe: String
+                try {
+                    userEingabe = readln()
+                    if (userEingabe.lowercase() != "k" && userEingabe.lowercase() != "z") {
+                        throw IllegalArgumentException("Ungültige Eingabe")
+                    }
 
-    var kopfOderZahl = listOf("k", "z")
-        val ergebnis = kopfOderZahl.random()
-    println("${ANSI_YELLOW}Die Münze landet und zeigt $ergebnis $`{ANSI_RESET}`${ANSI_ORANGE}(z = Zahl | k = Kopf)$`{ANSI_RESET}`")
-    println()
-        if (userEingabe == ergebnis ) {
-            println("${ANSI_ORANGE}Glückwunsch! Erste Hürde geschafft! Du fängst an!$`{ANSI_RESET}`")
-           spielrundenUserStart()
-        } else {
-            println("${ANSI_ORANGE}Du hast Verloren, der Gegner fängt an!$`{ANSI_RESET}`")
-            spielrundeGegnerStart()
-        }
-        }catch (e: Exception){
-            println("${ANSI_DARK_RED}Es gab einen Fehler $e. Bitte wähle zwischen 'k' & 'z'.$`{ANSI_RESET}`")
-            werStartet()
-        }
-    }
+                    var kopfOderZahl = listOf("k", "z")
+                    val ergebnis = kopfOderZahl.random()
+                    println("${ANSI_YELLOW}Die Münze landet und zeigt $ergebnis $`{ANSI_RESET}`${ANSI_ORANGE}(z = Zahl | k = Kopf)$`{ANSI_RESET}`")
+                    println()
+                    if (userEingabe == ergebnis) {
+                        println("${ANSI_ORANGE}Glückwunsch! Erste Hürde geschafft! Du fängst an!$`{ANSI_RESET}`")
+                        spielrundenUserStart()
+                    } else {
+                        println("${ANSI_ORANGE}Du hast Verloren, der Gegner fängt an!$`{ANSI_RESET}`")
+                        spielrundeGegnerStart()
+                    }
+                } catch (e: Exception) {
+                    println("${ANSI_DARK_RED}Es gab einen Fehler $e. Bitte wähle zwischen 'k' & 'z'.$`{ANSI_RESET}`")
+                    werStartet()
+                }
+            }
 
-    //-------------------------------------------------------------------------
+            //-------------------------------------------------------------------------
 
 
 //werStartet()
 //spielrundeGegnerStart()
 //startscreen()
 //spielrundenUserStart()
-spielrundeGegnerStart()
 
-
-
+            spielrundeGegnerStart()
 }
+
 

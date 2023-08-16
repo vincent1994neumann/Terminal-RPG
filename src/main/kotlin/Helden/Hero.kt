@@ -12,10 +12,7 @@ import kritischerSchaden
 import mittlererSchaden
 
 open class Hero (var name : String, var hpHero:Double, var isProtected : Boolean = false){
-init {
-    println("Ein $name wurde beschworen und steht dir zum Kampf bereit!")
-    Thread.sleep(500)
-}
+
     open var protectionCountdown = 0
     open var spezialAttackeVerfügbar = 1
     open var mittlereAttackeVerfügbar = 2
@@ -43,7 +40,7 @@ init {
 
     open fun mittlereAttacke (gegner: List<Gegner>) {
         if (mittlereAttackeVerfügbar <=0) {
-            println("Die Spezialattacke von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!")
+            println("Der Verstärkteangriff von $name wurde bereits verwendet und kann nicht erneut eingesetzt werden!")
             return
         }
         var mittlererSchaden = mittlererSchaden()
@@ -115,48 +112,51 @@ init {
     open fun attackeWählen(gegnerList : List<Gegner>, heldenListe: MutableList<Hero>){
         println("Bitte wähle eine Aktion:")
         println("$ANSI_ORANGE 1.    Standartangriff $`{ANSI_RESET}`")
-        if (mittlereAttackeVerfügbar > 0) {
-            println("$ANSI_ORANGE 2.    Verstärkter Angriff (Verfügbar: $mittlereAttackeVerfügbar) $`{ANSI_RESET}`")
-        }
-
-            println("$ANSI_ORANGE 3.    Spezialattacke (Verfügbar: $spezialAttackeVerfügbar) $`{ANSI_RESET}`")
+        println("$ANSI_ORANGE 2.    Verstärkter Angriff (Verfügbar: $mittlereAttackeVerfügbar) $`{ANSI_RESET}`")
+        println("$ANSI_ORANGE 3.    Spezialattacke (Verfügbar: $spezialAttackeVerfügbar) $`{ANSI_RESET}`")
 
         print("${ANSI_BRIGHT_BLUE}Welche Aktion möchtest du auswählen:  $`{ANSI_RESET}`")
-    try {
-        var choice = readln().toInt()
-        when (choice){
-            1 -> {
-                kleineAttacke(gegnerList)
-            }
-            2 -> {
-                if (mittlereAttackeVerfügbar>0) {
-                    mittlereAttacke(gegnerList)
-                }else{
-                    println("${ANSI_ORANGE}Du hast keine Mittlere Attacke mehr verfügbar!$`{ANSI_RESET}`")
-                    Thread.sleep(1500)
-                    attackeWählen(gegnerList,heldenListe)
+
+        var choice = readln().toIntOrNull()
+
+        if (choice != null && choice in 1..3) {
+            when (choice) {
+                1 -> {
+                    kleineAttacke(gegnerList)
+                }
+
+                2 -> {
+                    if (mittlereAttackeVerfügbar > 0) {
+                        mittlereAttacke(gegnerList)
+                    } else {
+                        println("${ANSI_ORANGE}Du hast keine Mittlere Attacke mehr verfügbar!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        attackeWählen(gegnerList, heldenListe)
+                    }
+                }
+
+                3 -> {
+                    if (spezialAttackeVerfügbar > 0) {
+                        spezialAttacke(gegnerList)
+                    } else {
+                        println("${ANSI_ORANGE}Du hast keine Spezialangriffe mehr verfügbar!$`{ANSI_RESET}`")
+                        Thread.sleep(1500)
+                        attackeWählen(gegnerList, heldenListe)
+                    }
+                }
+
+                else -> {
+                    println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
+                    attackeWählen(gegnerList, heldenListe)
                 }
             }
-            3 -> {
-                if (spezialAttackeVerfügbar> 0){
-                    spezialAttacke(gegnerList)
-                }else{
-                    println("${ANSI_ORANGE}Du hast keine Spezialangriffe mehr verfügbar!$`{ANSI_RESET}`")
-                    Thread.sleep(1500)
-                    attackeWählen(gegnerList,heldenListe)
-                }
-            }else -> {
-                println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
-                attackeWählen(gegnerList,heldenListe)
-            }
-        }
-    }catch (e : Exception){
-            println("$ANSI_DARK_RED Ups, $e ")
-            println("Bitte prüfe deine Eingabe. $`{ANSI_RESET}`")
-            attackeWählen(gegnerList,heldenListe)
+        }else {
+            println("$ANSI_DARK_RED Ungültige Auswahl!$`{ANSI_RESET}`")
+            attackeWählen(gegnerList, heldenListe)
         }
     }
 }
+
 
 
 

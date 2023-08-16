@@ -1,5 +1,6 @@
 import Gegner.ANSI_BROWN
 import Gegner.Gegner
+import Helden.Beutel
 import Helden.Hero
 const val ANSI_GREEN = "\u001B[32m"
 const val ANSI_DARK_RED = "\u001B[31m"
@@ -70,7 +71,7 @@ fun isProtected (heldenListe: MutableList<Hero>){
 }
 
 fun hpÜbersicht (gegnerListe: MutableList<Gegner>,heldenListe: MutableList<Hero>){
-    println("${ANSI_ORANGE}----------------- HP Übersicht -----------------$`{ANSI_RESET}`")
+    println("${ANSI_ORANGE}|----------------- HP Übersicht -----------------|$`{ANSI_RESET}`")
     println()
     println("${ANSI_ORANGE}Übersicht Lebenspunkte$`{ANSI_RESET}` ${ANSI_DARK_RED}Gegner $`{ANSI_RESET}`${ANSI_ORANGE}:$`{ANSI_RESET}`")
     hpÜbersichtGegner(gegnerListe)
@@ -78,4 +79,8 @@ fun hpÜbersicht (gegnerListe: MutableList<Gegner>,heldenListe: MutableList<Hero
     hpÜberischtHero(heldenListe)
     println()
     Thread.sleep(1000)
+}
+
+fun auswahltreffen (heldenListe: MutableList<Hero>, beutel: Beutel){
+
 }
