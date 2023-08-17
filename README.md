@@ -1,4 +1,6 @@
 # AbschlussprojektModul2
+![Alternativer Text für das Bild](https://tenor.com/6fte.gif)
+
 # 🎮 **Spielanleitung:** 🏹 *Helden vs. Gegner* ⚔️
 
 ---
