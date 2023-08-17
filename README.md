@@ -54,7 +54,7 @@ Entscheiden Sie, welcher Held angreifen soll und welche Angriffe er verwendet:
 3️⃣ **Magier**:
    - Hagelschaden - Flächenschaden für alle Gegner
    - Feuerball - Mittlerer Flächenschaden für alle Gegner (2x pro Spiel)
-   - Schutzzauber - Schützt alle Helden für 2 Runden vor Angriffen 
+   - Schutzzauber - Schützt alle Helden für 2 Runden vor Angriffen (2x pro Spiel)
 ---
 
 ## Beutel und Tränke 🎒
