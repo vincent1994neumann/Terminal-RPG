@@ -10,7 +10,7 @@ import Gegner.Gegner
 import geringerFlächenSchaden
 import mittlererFlächenSchaden
 
-class Magier (name : String, hpHero: Double = 100.0) : Hero(name,hpHero) {
+class Magier (name : String, hpHero: Double = 750.0) : Hero(name,hpHero) {
 
     open var feuerBallCounter = 2
 

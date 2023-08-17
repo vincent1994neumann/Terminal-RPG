@@ -8,7 +8,7 @@ import Helden.Hero
  * @property name Der Name des Dunklen Ritters.
  * @property hpGegner Die aktuellen Gesundheitspunkte (HP) des Dunklen Ritters.
  */
-class DunklerRitter(name: String, hpGegner: Double = 600.0) : Gegner(name, hpGegner) {
+class DunklerRitter(name: String, hpGegner: Double = 900.0) : Gegner(name, hpGegner) {
 
     /**
      * Führt einen leichten Angriff des Dunklen Ritters gegen einen Helden aus.
@@ -34,8 +34,8 @@ class DunklerRitter(name: String, hpGegner: Double = 600.0) : Gegner(name, hpGeg
     fun auswahlAttackeDunklerRitter(Hero: Hero) {
         var randomNumber = (1..100).random()
         when (randomNumber) {
-            in 1..55 -> kleineAttackeGegner(Hero)
-            in 56..100 -> mittlereAttackeGegner(Hero)
+            in 1..30 -> kleineAttackeGegner(Hero)
+            in 31..100 -> mittlereAttackeGegner(Hero)
         }
     }
 }

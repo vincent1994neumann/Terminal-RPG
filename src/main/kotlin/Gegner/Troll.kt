@@ -10,7 +10,7 @@ import kritischerSchaden
 import mittlererSchaden
 const val ANSI_BROWN = "\u001B[0;33m"
 
-class Troll (name: String, hpGegner: Double = 1000.0) : Gegner(name,hpGegner){
+class Troll (name: String, hpGegner: Double = 1200.0) : Gegner(name,hpGegner){
         //Attacke des Trolls
 
     /**

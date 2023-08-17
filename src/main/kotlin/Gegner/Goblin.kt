@@ -8,7 +8,7 @@ import Helden.Hero
  * @property name Der Name des Goblins.
  * @property hpGegner Die aktuellen Gesundheitspunkte (HP) des Goblins.
  */
-class Goblin(name: String, hpGegner: Double = 600.0) : Gegner(name, hpGegner) {
+class Goblin(name: String, hpGegner: Double = 800.0) : Gegner(name, hpGegner) {
 
     /**
      * Führt einen leichten Angriff des Goblins gegen einen Helden aus.
@@ -34,8 +34,8 @@ class Goblin(name: String, hpGegner: Double = 600.0) : Gegner(name, hpGegner) {
     fun auswahlAttackeGoblin(Hero: Hero) {
         var randomNumber = (1..100).random()
         when (randomNumber) {
-            in 1..50 -> kleineAttackeGegner(Hero)
-            in 50..100 -> mittlereAttackeGegner(Hero)
+            in 1..39 -> kleineAttackeGegner(Hero)
+            in 40..100 -> mittlereAttackeGegner(Hero)
         }
     }
 }

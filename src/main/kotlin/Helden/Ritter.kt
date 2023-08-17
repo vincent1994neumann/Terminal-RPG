@@ -2,7 +2,7 @@ package Helden
 
 import Gegner.Gegner
 
-class Ritter (name : String, hpHero :Double = 100.0, isProtected : Boolean = false) : Hero(name,hpHero, isProtected){
+class Ritter (name : String, hpHero :Double = 1000.0, isProtected : Boolean = false) : Hero(name,hpHero, isProtected){
 
     override fun kleineAttacke(gegner: List<Gegner>) {
         super.kleineAttacke(gegner)

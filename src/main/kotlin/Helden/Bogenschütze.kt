@@ -4,7 +4,7 @@ import geringerSchaden
 import mittlererSchaden
 import kritischerSchaden
 
-class Bogenschütze (name : String, hpHero: Double = 100.0) : Hero(name,hpHero){
+class Bogenschütze (name : String, hpHero: Double = 750.0) : Hero(name,hpHero){
 
     //Attacken des Bogenschützen
     //Pfeilangriff

@@ -7,27 +7,27 @@ const val ANSI_DARK_RED = "\u001B[31m"
 
 // Berechnet einen zufälligen Schadenswert zwischen 50 und 150.
 fun geringerSchaden(): Int {
-    return (50..150).random()
+    return (100..200).random()
 }
 
 // Berechnet einen zufälligen Schadenswert zwischen 150 und 350.
 fun mittlererSchaden(): Int {
-    return (150..350).random()
+    return (200..350).random()
 }
 
 // Berechnet einen zufälligen Schadenswert zwischen 350 und 650.
 fun kritischerSchaden(): Int {
-    return (350..650).random()
+    return (350..500).random()
 }
 
 // Berechnet einen zufälligen Schadenswert für Flächenangriffe zwischen 80 und 160.
 fun geringerFlächenSchaden(): Int{
-    return (80..160).random()
+    return (100..200).random()
 }
 
 // Berechnet einen zufälligen Schadenswert für Flächenangriffe zwischen 161 und 300.
 fun mittlererFlächenSchaden(): Int{
-    return (161..300).random()
+    return (200..300).random()
 }
 
 // Zeigt die aktuellen HP (Lebenspunkte) der Gegner an und entfernt eliminierte Gegner aus der Liste.
