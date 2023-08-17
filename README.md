@@ -1,5 +1,5 @@
 # AbschlussprojektModul2
-![Alternativer Text für das Bild](https://tenor.com/6fte.gif)
+![Don't like changes]([https://tenor.com/6fte.gif](https://tenor.com/de/view/idontlikechange-idontlikeitwhenthingschange-jonahhill-russellbrand-gif-5141411))
 
 # 🎮 **Spielanleitung:** 🏹 *Helden vs. Gegner* ⚔️
 
