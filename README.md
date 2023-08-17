@@ -52,8 +52,7 @@ Entscheiden Sie, welcher Held angreifen soll und welche Angriffe er verwendet:
 3️⃣ **Magier**:
    - Hagelschaden - Flächenschaden für alle Gegner
    - Feuerball - Mittlerer Flächenschaden für alle Gegner (2x pro Spiel)
-   - Schutzzauber - Schützt alle Helden für 2 Runden vor Angriffen (2x pro Spiel)
-
+   - Schutzzauber - Schützt alle Helden für 2 Runden vor Angriffen 
 ---
 
 ## Beutel und Tränke 🎒
@@ -77,7 +76,7 @@ Gegner haben unterschiedliche Angriffe:
    - Mittlere Attacke
    - Hohe Attacke
 
-Nach Ihrem Zug greifen die Gegner an. Wenn ein Held durch einen Schutzzauber geschützt ist, wird der Angriff des Gegners ins Leere gehen.
+Nach Ihrem Zug greifen die Gegner an. Wenn ein Held durch einen Schutzzauber geschützt ist, wird der Angriff des Gegners ins Leere gehen. Beachten Sie, dass in den Runden 3 und 6 die Gegner die Fähigkeit besitzen, einen zusätzlichen Goblin zu beschwören. Dies erhöht die Anzahl der angreifenden Gegner und macht den Kampf herausfordernder. Seien Sie also auf der Hut und passen Sie Ihre Strategie entsprechend an!
 
 ---
 
